@@ -2,20 +2,22 @@ let x = "bayley";
 
 console.log(x);
 
-let today = "tuesday";
+let y = 50
 
-console.log(today);
+console.log(y)
 
 let carName = "Volvo";
 
 console.log(carName);
 
-let num = "50"; 
+let num = 50; 
 
 console.log(num);
 
 let num1 = 5; 
 let num2 = 10; 
+
+console.log(num1 + num2)
 
 let num3 = num1+num2;  
 
