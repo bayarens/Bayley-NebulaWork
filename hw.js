@@ -6,6 +6,10 @@ let y = 50
 
 console.log(y)
 
+let myVariable = true 
+
+console.log(myVariable)
+
 let carName = "Volvo";
 
 console.log(carName);
