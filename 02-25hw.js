@@ -27,3 +27,6 @@ console.log(Math.floor(  Math.random()*1000  ))
 
 //5. 
 // Type coercion is the process of forcfully converting one data type to another
+
+// extra credit
+
