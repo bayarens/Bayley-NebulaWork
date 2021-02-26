@@ -11,24 +11,24 @@
         - Create a control flow (if..else statements) to determine what is logged to the console, based on that random number.
         - Definitely feel free to get creative.
 */
-const uname = "Hello Bayley,"
+const ZOLTAR = "Good evening Mr. Arens, I am the wizard ZOLTAR and"
 const ftrn =(Math.floor(  Math.random()*1000 ))   
-console.log(ftrn)
+console.log(ftrn) 
 
 if((ftrn) < 100){
-    console.log(uname, "I see HORRIBLE things in your future")
+    console.log(ZOLTAR, "I see HORRIBLE things in your future")
 } else if 
     ((ftrn) < 500){
-    console.log(uname, "I see bad things in your future")
+    console.log(ZOLTAR, "I see bad things in your future")
 } else if
     ((ftrn) == 500){
-    console.log(uname, "You're a pretty boring guy huh?")
+    console.log(ZOLTAR, "You're a pretty boring guy huh?")
 } else if
     ((ftrn) > 500){ 
-console.log(uname, "I see good things in your future") 
+console.log(ZOLTAR, "I see good things in your future") 
 } else if
     ((ftrn) > 900){
-console.log(uname, "I see GREAT things in your future")
+console.log(ZOLTAR, "I see GREAT things in your future")
 } 
 
 
