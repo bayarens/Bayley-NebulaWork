@@ -17,7 +17,7 @@ days.unshift('Sunday')
 console.log(days,"<-- 17") 
 
 // Remove the last element in the array. Log the new array and log the element removed 
-console.log(days.pop(),"<-- 20")  
+  
 console.log(days,"<-- 21")
 
 // Add 'Saturday' to the end of the array and log the new array
@@ -25,8 +25,8 @@ days.push('Saturday')
 console.log(days,"<--25") 
 
 // replace 'Thursday' with 'Friday Junior'
-console.log(days.indexOf('Thursday'),"<--28") // Thursday = 4
-days[4] = "Friday Junior" 
+console.log(days.indexOf('Thursday')) // Thursday = 4
+days[days.indexOf('Thursday')] = "Friday Junior" 
 console.log(days,"<-- 30")
 
 // extract your favorite day from the array and log the string: 'My favorite day of the week is (day)'
