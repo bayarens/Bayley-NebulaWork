@@ -4,7 +4,7 @@ Rock Paper Scissors (using functions, conditionals, Math, variables, data type)
 
         Possible outcomes:
             - Rock smashes Scissors
-            - Scissors cuts paper
+            - Scissors cuts Paper
             - Paper covers Rock
             - There could also be a tie
         
@@ -35,7 +35,7 @@ Uchoice.question("Rock, Paper, or Scissors?",myInput => {
 
 //Computer Choice
 function getRandomNumber() {
-return Math.floor(Math.random()*4 +1)
+return Math.floor(Math.random()*3 +1)
 }
 
 function CompChoice(randomNumber) {
@@ -47,7 +47,7 @@ function CompChoice(randomNumber) {
         return "Scissor"
     }
 }
-//console.log(CompChoice(getRandomNumber()),"<--get random choice here") 
+// console.log(CompChoice(getRandomNumber()),"<--get random choice here") 
 
 //Determine Winner
 function Winner(myInput,compInput) {
