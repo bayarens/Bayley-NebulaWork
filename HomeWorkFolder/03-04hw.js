@@ -45,7 +45,7 @@ function reverseArr(array) {
     }
     console.log(flipper)
     return flipper
-} 
+}
 reverseArr(numArray)
 // 5. Create another function that adds the numbers in the array that are NOT divisible by 3 and return the total.
 
@@ -66,6 +66,42 @@ const nestedArr = ['full', 'stack', ['node', 'react'], [], ['redux'], ['html', '
 
 // 6. Create a function that logs every word that has the letter 'a' in the word in the array and the nested arrays. Return "Done!" at the end.
 
+function searchA(array) {
+    let val = []
+    for (let i = 0; i < array.length; i++) {
+        if (Array.isArray(array[i])){
+        let recursive = searchA(array[i])
+        if (recursive.length) 
+        val.push(...recursive)    
+        } 
+        else if (array[i].search("a")!=-1) {
+            val.push(array[i])
+        }
+    }
+    return val
+}
+console.log(searchA(nestedArr).join(" "))
+console.log("Done!")
+
 // 7. Create a function that logs every word that has a length of 4 in the array and in the nested arrays. Return "Done!" at the end.
+
+function search4(array) {
+    let val = []
+    for (let i = 0; i < array.length; i++) {
+        if (Array.isArray(array[i])){
+        let recursive = search4(array[i])
+        if (recursive.length) 
+        val.push(...recursive)    
+        } 
+        else if (array[i].length == 4) {
+            val.push(array[i])
+        }
+    }
+    return val
+}
+console.log(search4(nestedArr).join(" "))
+console.log("Done!")
+
+
 
 // 8. Create a function that logs every word that has the letter 'a' in the word in the array and nested arrays.
