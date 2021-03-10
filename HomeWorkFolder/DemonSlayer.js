@@ -52,14 +52,27 @@ const opener = require('readline').createInterface({
 })
 
 function startGame() {
-    opener.question("Will you attack or wait?", myInput => {
+    opener.question("Will you attack, wait, or run?", myInput => {
         if (myInput == "attack") {
             demonSlayerAttack()
         } else if (myInput == "wait") {
             demonAttack()
+        } else if (myInput == "run") {
+            runOption()
         }
     })
 }
+function runOption(params) {
+const run = (Math.floor( Math.random()*100))
+if ((run) >= 50){
+    console.log("You have succesfully run away")
+} else if ((run) < 50){
+    console.log("you failed to get away")
+    startGame()
+    }
+    else opener.close()
+}
+
 startGame()
 function demonSlayerAttack(attack, health) {
     demonGuy.health -= demonSlayer.damage
