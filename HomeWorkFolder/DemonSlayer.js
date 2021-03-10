@@ -36,14 +36,16 @@ console.log("Oh no, DeamonSlayer has encountered a wild Demon")
 const demonSlayer = {
     health: 100,
     damage: 15,
-    // remaningHDS: healthPointsDS - hitPointsD
 }
 
 const demonGuy = {
     health: 100,
-    // remaningHD : healthPointsD - hitPointsDS
+    dealDamage: function() { this.damage = Math.round(Math.random() * 100)
+        return this.damage
+    },
+    damage: Math.round(Math.random() * 100)
 }
-demonGuy.damage = Math.round(Math.random() * 100)
+
 
 //Pick who goes first
 const opener = require('readline').createInterface({
@@ -52,7 +54,7 @@ const opener = require('readline').createInterface({
 })
 
 function startGame() {
-    opener.question("Will you attack, wait, or run?", myInput => {
+    opener.question("Will you attack, wait, or try to run away?", myInput => {
         if (myInput == "attack") {
             demonSlayerAttack()
         } else if (myInput == "wait") {
@@ -65,12 +67,17 @@ function startGame() {
 function runOption(params) {
 const run = (Math.floor( Math.random()*100))
 if ((run) >= 50){
-    console.log("You have succesfully run away")
-} else if ((run) < 50){
+    console.log("You succesfully ran away")
+    opener.question("will you play again?", myInput => {
+        if (myInput == "yes") {
+            startGame()
+        }
+        else opener.close()
+    })
+} if ((run) < 50){
     console.log("you failed to get away")
     startGame()
     }
-    else opener.close()
 }
 
 startGame()
@@ -78,7 +85,7 @@ function demonSlayerAttack(attack, health) {
     demonGuy.health -= demonSlayer.damage
     console.log("second form water wheel has ladned for", demonSlayer.damage, "demon's health is now", demonGuy.health)
     if (demonGuy.health <= 0) {
-        console.log("DemonSlayer has fainted, you lose!");
+        console.log("The Demon has been slain, you win!");
         opener.question("will you play again?", myInput => {
             if (myInput == "yes") {
                 startGame()
@@ -90,10 +97,10 @@ function demonSlayerAttack(attack, health) {
 }
 
 function demonAttack(attack, health) {
-    demonSlayer.health -= demonGuy.damage
-    console.log("Demon's dark claw has landed for,", demonGuy.damage, "demonslayer's health is now", demonSlayer.health)
+    demonSlayer.health -= demonGuy.dealDamage()
+    console.log("Demon's dark claw has landed for,", demonGuy.damage, "demonslayer's health is now", (demonSlayer.health))
     if (demonSlayer.health <= 0) {
-        console.log("The Demon has been slain, you win");
+        console.log("The DemonSlayer has fainted, you lose");
         opener.question("will you play again?", myInput => {
             if (myInput == "yes") {
                 startGame()
