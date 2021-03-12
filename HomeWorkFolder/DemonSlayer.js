@@ -35,12 +35,21 @@
 console.log("Oh no, DeamonSlayer has encountered a wild Demon")
 const demonSlayer = {
     health: 100,
-    damage: 15,
+    whichAttack: function (f) {
+        console.log(this.attacks)
+        opener.question("Which attack will you use?", attack => f(attack))
+    },
+    attacks: {
+        "Water Wheel": { damage: 50, missChance: 30 },
+        "Twisting Whirlpool": { damage: 35, missChance: 10 },
+        "Striking Tide": { damage: 10, missChance: 2 },
+        "Constant Flux": { damage: 100, missChance: 80 },
+    }
 }
-
 const demonGuy = {
     health: 100,
-    dealDamage: function() { this.damage = Math.round(Math.random() * 100)
+    dealDamage: function () {
+        this.damage = Math.round(Math.random() * 100)
         return this.damage
     },
     damage: Math.round(Math.random() * 100)
@@ -65,38 +74,46 @@ function startGame() {
     })
 }
 function runOption(params) {
-const run = (Math.floor( Math.random()*100))
-if ((run) >= 50){
-    console.log("You succesfully ran away")
-    opener.question("will you play again?", myInput => {
-        if (myInput == "yes") {
-            startGame()
-        }
-        else opener.close()
-    })
-} if ((run) < 50){
-    console.log("you failed to get away")
-    startGame()
-    }
-}
-
-startGame()
-function demonSlayerAttack(attack, health) {
-    demonGuy.health -= demonSlayer.damage
-    console.log("second form water wheel has ladned for", demonSlayer.damage, "demon's health is now", demonGuy.health)
-    if (demonGuy.health <= 0) {
-        console.log("The Demon has been slain, you win!");
+    const run = (Math.floor(Math.random() * 100))
+    if ((run) >= 50) {
+        console.log("You succesfully ran away")
         opener.question("will you play again?", myInput => {
             if (myInput == "yes") {
                 startGame()
             }
             else opener.close()
         })
+    } if ((run) < 50) {
+        console.log("you failed to get away")
+        startGame()
     }
-    else (demonAttack())
 }
 
+startGame()
+function demonSlayerAttack(attack, health) {
+    demonSlayer.whichAttack((attack) => {
+        let damage = demonSlayer.attacks[attack].damage
+        if (demonSlayer.attacks[attack].missChance >= Math.random() * 100) {
+            console.log("attack missed") 
+        } else {
+            demonGuy.health -= damage
+            console.log(attack, "has landed for", damage, "demon's health is now", demonGuy.health)
+        }
+        if (demonGuy.health <= 0) {
+            console.log("The Demon has been slain, you win!");
+            opener.question("will you play again?", myInput => {
+                if (myInput == "yes") {
+                    startGame()
+                }
+                else opener.close()
+            })
+        }
+        else (demonAttack())
+    })
+}
 function demonAttack(attack, health) {
+
+
     demonSlayer.health -= demonGuy.dealDamage()
     console.log("Demon's dark claw has landed for,", demonGuy.damage, "demonslayer's health is now", (demonSlayer.health))
     if (demonSlayer.health <= 0) {
@@ -108,7 +125,7 @@ function demonAttack(attack, health) {
             else opener.close()
             //opener.close will close out the program when it dosent have a yes value enterned 
         })
-}
+    }
     else (demonSlayerAttack())
 }
 
