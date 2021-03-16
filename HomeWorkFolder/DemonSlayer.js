@@ -36,18 +36,19 @@ console.log("Oh no, DeamonSlayer has encountered a wild Demon")
 const demonSlayer = {
     health: 100,
     whichAttack: function (f) {
-        console.log(this.attacks)
         opener.question("Which attack will you use?", attack => f(attack))
+        console.log(this.attacks)
     },
     attacks: {
-        "Water Wheel": { damage: 50, missChance: 30 },
-        "Twisting Whirlpool": { damage: 35, missChance: 10 },
-        "Striking Tide": { damage: 10, missChance: 2 },
+        "Water Wheel": { damage: 50, missChance: 30, /*bleedValue: 5*/},
+        "Twisting Whirlpool": { damage: 20, missChance: 10, /*healValue: 20*/},
+        "Striking Tide": { damage: 10, missChance: 2, /*critChance: 35*/},
         "Constant Flux": { damage: 100, missChance: 80 },
     }
 }
 const demonGuy = {
     health: 100,
+    //want to add a curse function that will kill 3 or 5 moves after landing, in case the demon gets really unlucky and only roles like single didget values
     dealDamage: function () {
         this.damage = Math.round(Math.random() * 100)
         return this.damage
@@ -63,11 +64,12 @@ const opener = require('readline').createInterface({
 })
 
 function startGame() {
-    opener.question("Will you attack, wait, or try to run away?", myInput => {
+    opener.question("Will you attack, defend, or try to run away?", myInput => {
         if (myInput == "attack") {
             demonSlayerAttack()
-        } else if (myInput == "wait") {
-            demonAttack()
+        } else if (myInput == "defend") {
+            //want to add an option where wait will turn into defend and demonSlayer will reduce incoming damage by 20% or something
+            demonAttack() //demonGuy.damage 
         } else if (myInput == "run") {
             runOption()
         }
@@ -93,6 +95,7 @@ startGame()
 function demonSlayerAttack(attack, health) {
     demonSlayer.whichAttack((attack) => {
         let damage = demonSlayer.attacks[attack].damage
+        // (place for codes that would add effectt to attack)
         if (demonSlayer.attacks[attack].missChance >= Math.random() * 100) {
             console.log("attack missed") 
         } else {
