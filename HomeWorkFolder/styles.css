@@ -1,0 +1,62 @@
+#grid-container {
+    height: 300px;
+    width: 300px;
+    display: grid; 
+    grid-template-columns: 300px 300px 300px 300px;
+    grid-template-rows: 300px 300px 300px 300px; 
+    background: rgb(255, 228, 196);
+}
+img {
+    width: 50%;
+    border: 1px solid rgb(32, 136, 101);
+}
+h1{
+    text-align: center;
+    font-family: 'Syne Mono';
+    font-size: 150%;
+    padding: 10px;
+}
+
+body {
+    background-color: rgb(135, 206, 250); 
+    
+}
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* align-items: center; */
+p {
+    font-family: 'Syne Mono';
+    display: flex; 
+    justify-content: center;
+    background-color: white;
+}
+
+#grid-container > div, #grid-container > p {
+    border: 1px solid rgb(220, 210, 220);
+}
+p > span{
+    text-align: center; 
+    height: 18px
+}
+
+.computer{
+    background: rgb(241, 49, 124) ;
+}
+
+.doom{
+    background: rgb(128, 128, 130) ;
+}
+
+.nature{
+    background: rgb(103, 154, 41);
+}
+
+.orange-water-fall{
+    background: rgb(243, 152, 73) ;
+}
+
+#grid-container > div{
+    display: flex;
+    justify-content: center;
+
+}
