@@ -1,0 +1,12 @@
+* {
+    border: 1px solid darkorange;
+    line-height: 30px;
+}
+p {
+    color: darkolivegreen;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14px;
+}
+h1{
+    color: darkolivegreen;
+}
