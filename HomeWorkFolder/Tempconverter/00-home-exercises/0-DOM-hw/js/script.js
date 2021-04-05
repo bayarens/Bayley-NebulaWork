@@ -58,9 +58,9 @@ const userUnitChosen = () => {
 
 const setOutput = () => {
     // Here we want to use our userOutput object to populate our conversions in the DOM
-    fahOutput.innerText = userOutput.fahrenheit
-    celOutput.innerText = userOutput.celsius
-    kelOutput.innerText = userOutput.kelvin
+    fahOutput.innerText = Math.floor(userOutput.fahrenheit)
+    celOutput.innerText = Math.floor(userOutput.celsius)
+    kelOutput.innerText = Math.floor(userOutput.kelvin)
 }
 
 const populateUserOutput = (input) => {
