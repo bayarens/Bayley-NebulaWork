@@ -1,6 +1,6 @@
 header {
     display: flex;
-    justify-content: center;
+    justify-content: start;
 }
 
 #calculator-frame{
@@ -8,6 +8,10 @@ header {
     align-items: center;
     flex-direction: column;
     border: 1px solid  orange;
+    max-height: 320px;
+    transition: all 0.5s; 
+    overflow: hidden;
+    max-width: 400px;
 }    
 #display-box > input{
     width: 100%;
@@ -33,7 +37,7 @@ flex-direction: column;
 }
 
 section.column{
-    align-items: center;
+    align-items: flex-start;
 }
 
 #calculator-frame #equal{
@@ -49,4 +53,22 @@ section.column{
 }*/ 
 .row:last-child{
     margin-top: -44px;
+}
+
+.column-main-container{
+    transition:all 1s;
+    overflow: hidden;
+}
+
+#display-box-holder.hide{
+    max-width: 0;
+}
+
+#calculator-frame.hide {
+    border: 0;
+    max-width: 0;
+}
+
+#display-box-holder, #display-box-holder > input{
+    width: 100%;
 }

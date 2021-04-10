@@ -1,54 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Calculator</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-    <body>
-        <header>
-            <h2>This is a calculator I made from scratch</h2>
-        </header>
-        <main>
-            <section class = column>
-                <div id="calculator-frame">
-                   
-                    <div class = "row"></div>
-                    <div class = "column">
-                        <div id="display-box">
-                            <input type="text" name="display" value="" placeholder=""/>
-                        </div>
-                        <div class = "row">
-                            <button id="clear" class="opp">A/C</button>
-                            <button class="opp">%</button>
-                            <button class="opp">/</button>
-                            <button class="opp">*</button>
-                        </div>
-                        <div class = "row">
-                            <button class="num">7</button>
-                            <button class="num">8</button>
-                            <button class="num">9</button>
-                            <button class="opp">-</button>
-                        </div>
-                        <div class = "row">
-                            <button class="num">4</button>
-                            <button class="num">5</button>
-                            <button class="num">6</button>
-                            <button class="opp">+</button>
-                        </div>
-                        <div class = "row">
-                            <button class="num">1</button>
-                            <button class="num">2</button>
-                            <button class="num">3</button>
-                            <button id="equal" class="opp">=</button>
-                        </div>
-                        <div class = "lastRow row">
-                            <button id="zero" class="num">0</button>
-                            <button class="num">.</button>
-                        </div>
+
+<body>
+    <header>
+        <h2>This is a calculator I made from scratch</h2>
+    </header>
+    <main>
+        <div class="column-main-container">
+        <section class="column">
+            <div id="calculator-frame">
+                <div class="row"></div>
+                <div class="column">
+                    <div id="display-box">
+                        <input type="text" name="display" value="" placeholder="" />
+                    </div>
+                    <div class="row">
+                        <button id="clear">A/C</button>
+                        <button class="opp">^</button>
+                        <button class="opp">/</button>
+                        <button class="opp">*</button>
+                    </div>
+                    <div class="row">
+                        <button class="num">7</button>
+                        <button class="num">8</button>
+                        <button class="num">9</button>
+                        <button class="opp">-</button>
+                    </div>
+                    <div class="row">
+                        <button class="num">4</button>
+                        <button class="num">5</button>
+                        <button class="num">6</button>
+                        <button class="opp">+</button>
+                    </div>
+                    <div class="row">
+                        <button class="num">1</button>
+                        <button class="num">2</button>
+                        <button class="num">3</button>
+                        <button id="equal">=</button>
+                    </div>
+                    <div class="lastRow row">
+                        <button id="zero" class="num">0</button>
+                        <button class="num">.</button>
                     </div>
                 </div>
-            </section>
-        </main>
-        <script src="script.js"></script>
-    </body>
+                <div id="display-box-holder">
+                    <input type="text" name="display-holder" value="" placeholder="" />
+                </div>
+            </div>
+            <div>
+                <button id="hide-button">Hide</button>
+            </div>
+        </section>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+
 </html>
