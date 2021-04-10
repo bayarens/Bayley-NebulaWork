@@ -32,12 +32,24 @@ const populateDisplayBoxHolder = (button) => {
     displayBoxHolder.value = displayBox.value
     displayBox.value = ""
     operator = button.innerText
+    button.classList.toggle("active")
+    if(activeButton){
+        activeButton.classList.toggle("active")
+    }
+    activeButton = button
 }
 
+let activeButton 
+
 const calculate = () => {
-    console.log(operator)
+    if(!operator){
+        return
+    }
     displayBox.value = operators[operator]()
     displayBoxHolder.value = ""
+    activeButton.classList.remove("active")
+    activeButton = null
+    operator = null
 }
 
 const numKeys = document.querySelectorAll("button.num")
@@ -59,6 +71,11 @@ function clear() {
         displayBoxHolder.value = ""
     }
     clearKey.innerText = "A/C"
+    if(activeButton){
+        activeButton.classList.remove("active")
+    }
+    activeButton = null
+    operator = null
 }
 
 clearKey.addEventListener("click", clear)
