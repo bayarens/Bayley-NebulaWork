@@ -1,13 +1,17 @@
 header {
     display: flex;
     justify-content: start;
+    color:black;
+}
+body {
+    background-image: url(https://www.collectorsprints.com/_images/babar/maths-400.jpg);
 }
 
 #calculator-frame{
     display: inline-flex;
     align-items: center;
     flex-direction: column;
-    border: 2px solid  orange;
+    border: 2px solid rgba(206, 112, 49, 0.904);
     max-height: 320px;
     transition: all 0.5s; 
     overflow: hidden;
@@ -22,13 +26,13 @@ header {
     border: none;
     height: 44px;
     box-sizing: border-box;
-    background: rgba(90, 90, 90, .3);
+    background: rgba(79, 77, 184, 0.904);
     filter: drop-shadow(0 0 10px gray);
     font-family: 'Bangers', cursive;
     font-size: 125%;
     letter-spacing: 5px;
     opacity: .8;
-    text-shadow: 0 0 1px orange;
+    text-shadow: 0 0 1px rgb(143, 219, 66);
     overflow: auto;
 }
 

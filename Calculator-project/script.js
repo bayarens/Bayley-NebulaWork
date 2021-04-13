@@ -16,14 +16,14 @@ const clearKey = document.querySelector("#clear")
 
 const equalKey = document.querySelector("#equal")
 
-//populating display box
-numKeys.forEach(numKey => numKey.addEventListener("click", () => populateDisplayBox(numKey)));
-
 //this is the function that will take take the buttons I've pressed (if they are numbers) and populate the display box
 const populateDisplayBox = (button) => {
     displayBox.value += button.innerText
     clearKey.innerText = "C"
 }
+
+//populating display box
+numKeys.forEach(numKey => numKey.addEventListener("click", () => populateDisplayBox(numKey)));
 
 // this is the function that will take what was in the display box and put it into the display box below to hold the value after an operation is entered
 const populateDisplayBoxHolder = (button) => {
@@ -93,8 +93,3 @@ function onToggleHideClick(e){
     calculator.classList.toggle('hide');
     e.target.innerText = calculator.classList.contains('hide') ? 'Show' : 'Hide'
 }
-
-
-
-
-
