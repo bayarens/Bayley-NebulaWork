@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <Title>DemonSlayer</Title>
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="utf-8" />
+    <style type="text/css">
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body onload="draw()">
+    <canvas id="background" width="800" height="500"></canvas>
+    
+    <div>
+        <div id="openingQuestion"></div>
+        <input id="response" type="text" value=""></input>
+        <button id="submit">Submit</button>
+    </div>
+    <div id="imageLoader">
+        <img src="img/Tanjiro.png" alt="Tanjiro1" name="tanjiro">
+        <img src="img/Tanjiro2.png" alt="Tanjiro2" name="tanjiro2">
+    </div>
+    
+    <script src="js/DemonSlayer.js" type="application/javascript"/> 
+</body>
+
+</html>
