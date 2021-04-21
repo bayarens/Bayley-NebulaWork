@@ -1,16 +1,61 @@
 const canvas = document.getElementById('background');
 const ctx = canvas.getContext('2d');
 const output = document.getElementById('output')
+let imageLoader = document.querySelectorAll("#imageLoader img")
+const slayerHealthbar = document.querySelector("#slayerHealthBar")
+const demonHealthbar = document.querySelector("#demonHealthBar")
+
+
 
 function draw() {
-    if (canvas.getContext) {
-        ctx.fillStyle = 'rgb(200, 0, 0)';
-        ctx.fillRect(10, 10, 50, 50);
-        ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
-        ctx.fillRect(30, 30, 50, 50);
+    
+}
+
+class Player {
+    constructor(health, minDamage, maxDamage, level, money){
+        this.health = health;
+        this.minDamage = minDamage;
+        this.maxDamage = maxDamage;
+        this.level = level;
+        this.money = money;
     }
 }
-let imageLoader = document.querySelectorAll("#imageLoader img")
+
+class Enemy {
+    constructor(health, damageMin, damageMax, extraAbility = null){
+        this.health = health;
+        this.damageMin = damageMin;
+        this.damageMax = damageMax;
+        this.extraAbility = extraAbility;
+    }
+
+    performExtraAbility(){
+        if(this.extraAbility){
+            return this.extraAbility()
+        } else {
+            console.log("Enemy doesn't have an extra ability")
+        }
+    }
+
+    dealDamage(){
+        // Pick a random number between damageLower and damageHigher
+        return Math.round(Math.random() * (this.damageMax - this.damageMin) + this.damageMin);
+    }
+}
+
+class Shop {
+    constructor(potion, antidote, superpotion, eather){
+        this.potion = potion;
+        this.antidote = antidote;
+        this.superpotion = superpotion;
+        this.eather = eather;
+    }
+}
+
+const demon = new Enemy(100, 20, 40) 
+const demonLvl2 = new Enemy(150, 30, 60)
+const demonMiniB = new Enemy(300, 50, 80)
+const demonBoss = new Enemy(500, 100, 200)
 
 console.log("Oh no, DeamonSlayer has encountered a wild Demon")
 const demonSlayer = {
@@ -47,6 +92,7 @@ const demonSlayer = {
         this.draw()
     }
 }
+slayerHealthbar.innerText= demonSlayer.health + "HP";
 const demonGuy = {
     health: 100,
     //want to add a curse function that will kill 3 or 5 moves after landing, in case the demon gets really unlucky and only roles like single didget values
@@ -56,11 +102,10 @@ const demonGuy = {
     },
     damage: Math.round(Math.random() * 100)
 }
-
+demon
 
 
 const openingQ = document.getElementById('openingQuestion')
-//const response = document.getElementById('response')
 const submitBut = document.querySelectorAll(".submit")
 
 const opener = {
@@ -71,14 +116,17 @@ const opener = {
     submitQuestion(e) {
         console.log(e)
         opener.responseFunc(e.target.innerText.toLowerCase())
-        //       response.value = ""
+    },
+    changeButtonCtx(){
+
     }
 }
 
-//response.addEventListener("submit", opener.submitQuestion);
 for (i = 0; i < submitBut.length; i++) {
     submitBut[i].addEventListener("click", opener.submitQuestion)
 }
+demonHealthbar.innerText = demonGuy.health + "HP";
+
 
 
 function startGame() {

@@ -1,6 +1,11 @@
 body canvas{
-    background-image: url(https://pm1.narvii.com/7841/7b228eeb57ed315347ece7414d7032bb185d6123r4-750-375_00.jpg);
+    background-image: url("https://pm1.narvii.com/7841/7b228eeb57ed315347ece7414d7032bb185d6123r4-750-375_00.jpg");
     background-size: cover;
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
 }
 
 #inputBox{
@@ -34,3 +39,24 @@ flex-basis: 50%;
     overflow: hidden;
 }
 
+#healthbars{
+    width: 1450px;
+}
+#slayerHealthBar{
+    position: absolute;
+    width: 400px;
+    height: 30px;
+    border: chartreuse solid 3px;
+    background-color: chartreuse;
+}
+
+#demonHealthBar{
+    position: absolute;
+    right: 0; 
+    justify-content: end;
+    width: 400px;
+    height: 30px;
+    border: chartreuse solid 3px;
+    background-color: chartreuse;
+    text-align: end;
+}
