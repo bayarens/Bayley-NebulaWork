@@ -1,4 +1,36 @@
-body{
-    display: flex;
-    justify-content: center;
+body canvas{
+    background-image: url(https://pm1.narvii.com/7841/7b228eeb57ed315347ece7414d7032bb185d6123r4-750-375_00.jpg);
+    background-size: cover;
 }
+
+#inputBox{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    outline: solid 3px grey;
+    width: 500px;
+}
+
+#output{
+    border: 3px solid grey;
+    padding: 10px;
+    width: 100%;
+    margin-right: auto;
+}
+
+#responseButtons{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#responseButtons .submit{
+flex-basis: 50%;
+}
+
+#imageLoader{
+    height: 0;
+    width: 0;
+    overflow: hidden;
+}
+

@@ -1,5 +1,6 @@
 const canvas = document.getElementById('background');
 const ctx = canvas.getContext('2d');
+const output = document.getElementById('output')
 
 function draw() {
     if (canvas.getContext) {
@@ -9,17 +10,7 @@ function draw() {
         ctx.fillRect(30, 30, 50, 50);
     }
 }
- let imageLoader = document.querySelectorAll("#imageLoader img")
-// let imageCount = imageLoader.length
-// imageLoader.forEach(element => {
-//     element.addEventListener("load", () => {
-//         imageCount--
-//         console.log(imageCount)
-//         if (imageCount <= 0) {
-//             startGame()
-//         }
-//     })
-// });
+let imageLoader = document.querySelectorAll("#imageLoader img")
 
 console.log("Oh no, DeamonSlayer has encountered a wild Demon")
 const demonSlayer = {
@@ -34,25 +25,24 @@ const demonSlayer = {
         "Striking Tide": { damage: 10, missChance: 2, /*critChance: 35*/ },
         "Constant Flux": { damage: 100, missChance: 80 },
     },
-    x: 50,
-    y: 273,
+    x: 25,
+    y: 335,
     draw: function () {
-        ctx.clearRect(0,0, 800, 500)  
+        ctx.clearRect(0, 0, 800, 500)
         ctx.drawImage(this.img, this.x, this.y)
     },
     imgQueue: [],
     currentImg: 0,
 
     startAnimation(animation) {
-        if(animation == "idle"){
+        if (animation == "idle") {
             this.imgQueue = imageLoader
             this.currentImg = 0
         }
     },
     playAnimation() {
         setTimeout(() => this.playAnimation(), 200)
-        console.log(this.imgQueue)
-        this.currentImg = (this.currentImg+1) % this.imgQueue.length
+        this.currentImg = (this.currentImg + 1) % this.imgQueue.length
         this.img = this.imgQueue[this.currentImg]
         this.draw()
     }
@@ -68,33 +58,33 @@ const demonGuy = {
 }
 
 
-//Pick who goes first
-// const opener = require('readline').createInterface({
-//     input: process.stdin,
-//     output: process.stdout
-// })
+
 const openingQ = document.getElementById('openingQuestion')
-const response = document.getElementById('response')
-const submitBut = document.querySelector("#submit")
+//const response = document.getElementById('response')
+const submitBut = document.querySelectorAll(".submit")
 
 const opener = {
     question(outputQuestion, responseFunc) {
-        openingQ.innerText = outputQuestion;
+        output.innerText = outputQuestion;
         this.responseFunc = responseFunc;
     },
-    submitQuestion() {
-        opener.responseFunc(response.value)
-        response.value = ""
+    submitQuestion(e) {
+        console.log(e)
+        opener.responseFunc(e.target.innerText.toLowerCase())
+        //       response.value = ""
     }
 }
 
-response.addEventListener("submit", opener.submitQuestion);
-submitBut.addEventListener("click", opener.submitQuestion)
+//response.addEventListener("submit", opener.submitQuestion);
+for (i = 0; i < submitBut.length; i++) {
+    submitBut[i].addEventListener("click", opener.submitQuestion)
+}
+
 
 function startGame() {
     demonSlayer.startAnimation("idle")
     demonSlayer.playAnimation()
-    opener.question("Will you attack, defend, or try to run away?", myInput => {
+    opener.question("What will you do slayer?", myInput => {
         if (myInput == "attack") {
             demonSlayerAttack()
         } else if (myInput == "defend") {

@@ -13,19 +13,26 @@
 </head>
 
 <body onload="draw()">
-    <canvas id="background" width="800" height="500"></canvas>
-    
-    <div>
+    <canvas id="background" width="1200" height="600"></canvas>
+    <div id="healthBars"></div>
+    <div id="inputBox">
+        <div id="output">
+            
+        </div>
         <div id="openingQuestion"></div>
-        <input id="response" type="text" value=""></input>
-        <button id="submit">Submit</button>
+        <div id="responseButtons">
+            <button class="submit">Attack</button>
+            <button class="submit">Defend</button>
+            <button class="submit">Run</button>
+            <button class="submit">Shop</button>
+        </div>
     </div>
     <div id="imageLoader">
         <img src="img/Tanjiro.png" alt="Tanjiro1" name="tanjiro">
         <img src="img/Tanjiro2.png" alt="Tanjiro2" name="tanjiro2">
     </div>
-    
-    <script src="js/DemonSlayer.js" type="application/javascript"></script> 
+
+    <script src="js/DemonSlayer.js" type="application/javascript"></script>
 </body>
 
 </html>
