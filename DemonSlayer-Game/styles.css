@@ -60,3 +60,14 @@ flex-basis: 50%;
     background-color: chartreuse;
     text-align: end;
 }
+
+#infoDisplay{
+    border: burlywood solid 3px;
+    background-color: burlywood;
+    width: 300px;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    overflow: scroll;
+}

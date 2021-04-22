@@ -4,8 +4,11 @@ const output = document.getElementById('output')
 let imageLoader = document.querySelectorAll("#imageLoader img")
 const slayerHealthbar = document.querySelector("#slayerHealthBar")
 const demonHealthbar = document.querySelector("#demonHealthBar")
+const infoBox = document.querySelector("#infoDisplay")
 
-
+function populateInfoBox(text) {
+    infoBox.innerText = text
+}
 
 function draw() {
 
@@ -18,6 +21,7 @@ class Player {
     }
     whichAttack = function (f) {
         opener.question("Which attack will you use?", ["Water Wheel", "Twisting Whirlpool", "Striking Tide", "Constant Flux"] ,attack => f(attack))
+        populateInfoBox("Water Wheel: damage: 50 missChance: 30 bleedValue: 5 \n Twisting Whirlpool: damage: 20, missChance: 10 healValue: 20 \n Striking Tide: damage: 10 missChance: 2 critChance: 35 \n Constant Flux: damage: 100 missChance: 80")
     }
     attacks = {
         "Water Wheel": { damage: 50, missChance: 30, /*bleedValue: 5*/ },
@@ -25,6 +29,7 @@ class Player {
         "Striking Tide": { damage: 10, missChance: 2, /*critChance: 35*/ },
         "Constant Flux": { damage: 100, missChance: 80 },
     }
+    //populateInfoBox(attacks)
     x = 25
     y = 335
     draw = function () {
@@ -47,7 +52,7 @@ class Player {
         this.draw()
     }
 }
-
+const tanjiro = new Player(500) 
 
 class Enemy {
     constructor(health, damageMin, damageMax, extraAbility = null) {
@@ -71,22 +76,26 @@ class Enemy {
     }
 }
 
-class Shop {
-    constructor(potion, antidote, superpotion, eather, cost) {
-        this.potion = potion;
-        this.antidote = antidote;
-        this.superpotion = superpotion;
-        this.eather = eather;
-        this.cost = cost;
-    }
-}
-const tanjiro = new Player(500) 
 const demon = new Enemy(100, 20, 40)
 const demonLvl2 = new Enemy(150, 30, 60)
 const demonMiniB = new Enemy(300, 50, 80)
 const demonBoss = new Enemy(500, 100, 200)
 
-console.log("Oh no, DeamonSlayer has encountered a wild Demon")
+class Shop {
+    constructor(name, effect, cost) {
+        this.name = name
+        this.effect = effect
+        this.cost = cost;
+    }
+}
+
+// const potion = new Shop(Potion, heal20HP, 10) 
+// const superPotion = new Shop(SuperPotion, heal50HP, 25)
+// const antidote = new Shop(Antidote, rmvPoison, 15)
+// const ether = new Shop(Ether, healAllHP, 50)
+
+
+
 
 slayerHealthbar.innerText = tanjiro.health + "HP";
 const demonGuy = {
@@ -128,6 +137,7 @@ demonHealthbar.innerText = demonGuy.health + "HP";
 
 
 function startGame() {
+    populateInfoBox("Oh no, DeamonSlayer has encountered a wild Demon")
     console.log(tanjiro)
     tanjiro.startAnimation("idle")
     tanjiro.playAnimation()
@@ -147,7 +157,7 @@ function startGame() {
 function runOption() {
     const run = (Math.floor(Math.random() * 100))
     if ((run) >= 50) {
-        console.log("You succesfully ran away")
+        populateInfoBox("You succesfully ran away")
         opener.question("will you play again?", ["yes", "no", "...", "..."], myInput => {
             if (myInput == "yes") {
                 startGame()
@@ -155,14 +165,14 @@ function runOption() {
             else opener.close()
         })
     } if ((run) < 50) {
-        console.log("you failed to get away")
+        populateInfoBox("you failed to get away")
         startGame()
     }
 }
 
 function shop(){
     //have to finish costs 
-    opener.question("what will you buy?", [`Potion${cost}`, `Antidote${cost}` , `Super Potion${cost}`, `Eather${cost}`], myInput => {
+    opener.question("what will you buy?", [`Potion${potion.cost}`, `Antidote${antidote.cost}` , `Super Potion${superPotion.cost}`, `Ether${ether.cost}`], myInput => {
         if(myInput == "Potion") {
 
         }
@@ -174,13 +184,13 @@ function demonSlayerAttack(attack, health) {
         let damage = tanjiro.attacks[attack].damage
         // (place for codes that would add effectt to attack)
         if (tanjiro.attacks[attack].missChance >= Math.random() * 100) {
-            console.log("attack missed")
+            populateInfoBox("attack missed")
         } else {
             demonGuy.health -= damage
-            console.log(attack, "has landed for", damage, "demon's health is now", demonGuy.health)
+            populateInfoBox(attack, "has landed for", damage, "demon's health is now", demonGuy.health)
         }
         if (demonGuy.health <= 0) {
-            console.log("The Demon has been slain, you win!");
+            populateInfoBox("The Demon has been slain, you win!");
             opener.question("will you play again?", myInput => {
                 if (myInput == "yes") {
                     startGame()
@@ -195,9 +205,9 @@ function demonAttack(attack, health) {
 
 
     tanjiro.health -= demonGuy.dealDamage()
-    console.log("Demon's dark claw has landed for,", demonGuy.damage, "tanjiro's health is now", (tanjiro.health))
+    populateInfoBox("Demon's dark claw has landed for,", demonGuy.damage, "tanjiro's health is now", (tanjiro.health))
     if (tanjiro.health <= 0) {
-        console.log(demonSlayer.name + "has fainted, you lose");
+        populateInfoBox(demonSlayer.name + "has fainted, you lose");
         opener.question("will you play again?", myInput => {
             if (myInput == "yes") {
                 startGame()
