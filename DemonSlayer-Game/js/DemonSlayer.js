@@ -8,83 +8,38 @@ const demonHealthbar = document.querySelector("#demonHealthBar")
 
 
 function draw() {
-    
+
 }
 
 class Player {
-    constructor(health, minDamage, maxDamage, level, money){
+    constructor(health) {
         this.health = health;
-        this.minDamage = minDamage;
-        this.maxDamage = maxDamage;
-        this.level = level;
-        this.money = money;
+        this.money = 0;
     }
-}
-
-class Enemy {
-    constructor(health, damageMin, damageMax, extraAbility = null){
-        this.health = health;
-        this.damageMin = damageMin;
-        this.damageMax = damageMax;
-        this.extraAbility = extraAbility;
+    whichAttack = function (f) {
+        opener.question("Which attack will you use?", ["Water Wheel", "Twisting Whirlpool", "Striking Tide", "Constant Flux"] ,attack => f(attack))
     }
-
-    performExtraAbility(){
-        if(this.extraAbility){
-            return this.extraAbility()
-        } else {
-            console.log("Enemy doesn't have an extra ability")
-        }
-    }
-
-    dealDamage(){
-        // Pick a random number between damageLower and damageHigher
-        return Math.round(Math.random() * (this.damageMax - this.damageMin) + this.damageMin);
-    }
-}
-
-class Shop {
-    constructor(potion, antidote, superpotion, eather){
-        this.potion = potion;
-        this.antidote = antidote;
-        this.superpotion = superpotion;
-        this.eather = eather;
-    }
-}
-
-const demon = new Enemy(100, 20, 40) 
-const demonLvl2 = new Enemy(150, 30, 60)
-const demonMiniB = new Enemy(300, 50, 80)
-const demonBoss = new Enemy(500, 100, 200)
-
-console.log("Oh no, DeamonSlayer has encountered a wild Demon")
-const demonSlayer = {
-    health: 100,
-    whichAttack: function (f) {
-        opener.question("Which attack will you use?", attack => f(attack))
-        console.log(this.attacks)
-    },
-    attacks: {
+    attacks = {
         "Water Wheel": { damage: 50, missChance: 30, /*bleedValue: 5*/ },
         "Twisting Whirlpool": { damage: 20, missChance: 10, /*healValue: 20*/ },
         "Striking Tide": { damage: 10, missChance: 2, /*critChance: 35*/ },
         "Constant Flux": { damage: 100, missChance: 80 },
-    },
-    x: 25,
-    y: 335,
-    draw: function () {
+    }
+    x = 25
+    y = 335
+    draw = function () {
         ctx.clearRect(0, 0, 800, 500)
         ctx.drawImage(this.img, this.x, this.y)
-    },
-    imgQueue: [],
-    currentImg: 0,
+    }
+    imgQueue = []
+    currentImg = 0
 
     startAnimation(animation) {
         if (animation == "idle") {
             this.imgQueue = imageLoader
             this.currentImg = 0
         }
-    },
+    }
     playAnimation() {
         setTimeout(() => this.playAnimation(), 200)
         this.currentImg = (this.currentImg + 1) % this.imgQueue.length
@@ -92,7 +47,48 @@ const demonSlayer = {
         this.draw()
     }
 }
-slayerHealthbar.innerText= demonSlayer.health + "HP";
+
+
+class Enemy {
+    constructor(health, damageMin, damageMax, extraAbility = null) {
+        this.health = health;
+        this.damageMin = damageMin;
+        this.damageMax = damageMax;
+        this.extraAbility = extraAbility;
+    }
+
+    performExtraAbility() {
+        if (this.extraAbility) {
+            return this.extraAbility()
+        } else {
+            console.log("Enemy doesn't have an extra ability")
+        }
+    }
+
+    dealDamage() {
+        // Pick a random number between damageLower and damageHigher
+        return Math.round(Math.random() * (this.damageMax - this.damageMin) + this.damageMin);
+    }
+}
+
+class Shop {
+    constructor(potion, antidote, superpotion, eather, cost) {
+        this.potion = potion;
+        this.antidote = antidote;
+        this.superpotion = superpotion;
+        this.eather = eather;
+        this.cost = cost;
+    }
+}
+const tanjiro = new Player(500) 
+const demon = new Enemy(100, 20, 40)
+const demonLvl2 = new Enemy(150, 30, 60)
+const demonMiniB = new Enemy(300, 50, 80)
+const demonBoss = new Enemy(500, 100, 200)
+
+console.log("Oh no, DeamonSlayer has encountered a wild Demon")
+
+slayerHealthbar.innerText = tanjiro.health + "HP";
 const demonGuy = {
     health: 100,
     //want to add a curse function that will kill 3 or 5 moves after landing, in case the demon gets really unlucky and only roles like single didget values
@@ -102,37 +98,40 @@ const demonGuy = {
     },
     damage: Math.round(Math.random() * 100)
 }
-demon
+
 
 
 const openingQ = document.getElementById('openingQuestion')
-const submitBut = document.querySelectorAll(".submit")
+const allButtons = document.querySelectorAll(".submit")
 
 const opener = {
-    question(outputQuestion, responseFunc) {
+    question(outputQuestion, buttons, responseFunc) {
         output.innerText = outputQuestion;
         this.responseFunc = responseFunc;
+        this.buttons = buttons;
+        //i need to set all of the buttons to their corresponding 
+        for(let i=0; i < buttons.length; i++){
+            allButtons[i].innerText = buttons[i]
+        }
     },
     submitQuestion(e) {
         console.log(e)
         opener.responseFunc(e.target.innerText.toLowerCase())
     },
-    changeButtonCtx(){
-
-    }
 }
 
-for (i = 0; i < submitBut.length; i++) {
-    submitBut[i].addEventListener("click", opener.submitQuestion)
+for (i = 0; i < allButtons.length; i++) {
+    allButtons[i].addEventListener("click", opener.submitQuestion)
 }
 demonHealthbar.innerText = demonGuy.health + "HP";
 
 
 
 function startGame() {
-    demonSlayer.startAnimation("idle")
-    demonSlayer.playAnimation()
-    opener.question("What will you do slayer?", myInput => {
+    console.log(tanjiro)
+    tanjiro.startAnimation("idle")
+    tanjiro.playAnimation()
+    opener.question("What will you do slayer?", ["Attack", "Defend", "Run", "Shop"] ,myInput => {
         if (myInput == "attack") {
             demonSlayerAttack()
         } else if (myInput == "defend") {
@@ -140,14 +139,16 @@ function startGame() {
             demonAttack() //demonGuy.damage 
         } else if (myInput == "run") {
             runOption()
-        }
+        } else if (myInput == "shop"){
+            shop()
+        } 
     })
 }
-function runOption(params) {
+function runOption() {
     const run = (Math.floor(Math.random() * 100))
     if ((run) >= 50) {
         console.log("You succesfully ran away")
-        opener.question("will you play again?", myInput => {
+        opener.question("will you play again?", ["yes", "no", "...", "..."], myInput => {
             if (myInput == "yes") {
                 startGame()
             }
@@ -159,11 +160,20 @@ function runOption(params) {
     }
 }
 
+function shop(){
+    //have to finish costs 
+    opener.question("what will you buy?", [`Potion${cost}`, `Antidote${cost}` , `Super Potion${cost}`, `Eather${cost}`], myInput => {
+        if(myInput == "Potion") {
+
+        }
+    })
+}
+
 function demonSlayerAttack(attack, health) {
-    demonSlayer.whichAttack((attack) => {
-        let damage = demonSlayer.attacks[attack].damage
+    tanjiro.whichAttack((attack) => {
+        let damage = tanjiro.attacks[attack].damage
         // (place for codes that would add effectt to attack)
-        if (demonSlayer.attacks[attack].missChance >= Math.random() * 100) {
+        if (tanjiro.attacks[attack].missChance >= Math.random() * 100) {
             console.log("attack missed")
         } else {
             demonGuy.health -= damage
@@ -184,10 +194,10 @@ function demonSlayerAttack(attack, health) {
 function demonAttack(attack, health) {
 
 
-    demonSlayer.health -= demonGuy.dealDamage()
-    console.log("Demon's dark claw has landed for,", demonGuy.damage, "demonslayer's health is now", (demonSlayer.health))
-    if (demonSlayer.health <= 0) {
-        console.log("The DemonSlayer has fainted, you lose");
+    tanjiro.health -= demonGuy.dealDamage()
+    console.log("Demon's dark claw has landed for,", demonGuy.damage, "tanjiro's health is now", (tanjiro.health))
+    if (tanjiro.health <= 0) {
+        console.log(demonSlayer.name + "has fainted, you lose");
         opener.question("will you play again?", myInput => {
             if (myInput == "yes") {
                 startGame()
