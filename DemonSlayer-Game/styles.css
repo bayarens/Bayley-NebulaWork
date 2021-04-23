@@ -17,7 +17,7 @@ body{
 }
 
 #output{
-    border: 3px solid grey;
+    border: 3px solid grey;;
     padding: 10px;
     width: 100%;
     margin-right: auto;
@@ -31,6 +31,13 @@ body{
 
 #responseButtons .submit{
 flex-basis: 50%;
+cursor: pointer;
+}
+
+#responeButtons button.submit:hover{
+    opacity: 1;
+    background-color: blue;
+    color:white;
 }
 
 #imageLoader{
@@ -68,6 +75,5 @@ flex-basis: 50%;
     height: 100px;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
     overflow: scroll;
 }

@@ -11,25 +11,24 @@ function populateInfoBox(text) {
 }
 
 function draw() {
-
 }
 
 class Player {
-    constructor(health) {
+    constructor(name, health) {
         this.health = health;
+        this.name = name;
         this.money = 0;
     }
     whichAttack = function (f) {
         opener.question("Which attack will you use?", ["Water Wheel", "Twisting Whirlpool", "Striking Tide", "Constant Flux"] ,attack => f(attack))
-        populateInfoBox("Water Wheel: damage: 50 missChance: 30 bleedValue: 5 \n Twisting Whirlpool: damage: 20, missChance: 10 healValue: 20 \n Striking Tide: damage: 10 missChance: 2 critChance: 35 \n Constant Flux: damage: 100 missChance: 80")
+        populateInfoBox("Water Wheel: \n Damage: 50 Miss chance: 30% bleed: 5dmg \n \n Twisting Whirlpool: \n Damage: 20, Miss chance: 10% Healing: 20HP \n \n Striking Tide: \n Damage: 10 Miss chance: 2% Critcal hit chance: 35% \n \nConstant Flux: \n Damage: 100 Miss chance: 66%")
     }
     attacks = {
-        "Water Wheel": { damage: 50, missChance: 30, /*bleedValue: 5*/ },
-        "Twisting Whirlpool": { damage: 20, missChance: 10, /*healValue: 20*/ },
-        "Striking Tide": { damage: 10, missChance: 2, /*critChance: 35*/ },
-        "Constant Flux": { damage: 100, missChance: 80 },
+        "water wheel": { damage: 50, missChance: 30, /*bleedValue: 5*/ },
+        "twisting whirlpool": { damage: 20, missChance: 10, /*healValue: 20*/ },
+        "striking tide": { damage: 10, missChance: 2, /*critChance: 35*/ },
+        "constant flux": { damage: 100, missChance: 66 },
     }
-    //populateInfoBox(attacks)
     x = 25
     y = 335
     draw = function () {
@@ -52,7 +51,7 @@ class Player {
         this.draw()
     }
 }
-const tanjiro = new Player(500) 
+const tanjiro = new Player("Tanjiro", 500) 
 
 class Enemy {
     constructor(health, damageMin, damageMax, extraAbility = null) {
@@ -61,7 +60,6 @@ class Enemy {
         this.damageMax = damageMax;
         this.extraAbility = extraAbility;
     }
-
     performExtraAbility() {
         if (this.extraAbility) {
             return this.extraAbility()
@@ -69,9 +67,7 @@ class Enemy {
             console.log("Enemy doesn't have an extra ability")
         }
     }
-
     dealDamage() {
-        // Pick a random number between damageLower and damageHigher
         return Math.round(Math.random() * (this.damageMax - this.damageMin) + this.damageMin);
     }
 }
@@ -89,18 +85,15 @@ class Shop {
     }
 }
 
-// const potion = new Shop(Potion, heal20HP, 10) 
-// const superPotion = new Shop(SuperPotion, heal50HP, 25)
-// const antidote = new Shop(Antidote, rmvPoison, 15)
-// const ether = new Shop(Ether, healAllHP, 50)
-
-
-
+const potion = new Shop("Potion", "heal100HP", 10) 
+const superPotion = new Shop("SuperPotion", "heal250HP", 25)
+const antidote = new Shop("Antidote", "rmvPoison", 15)
+const ether = new Shop("Ether", "healAllHP", 50)
 
 slayerHealthbar.innerText = tanjiro.health + "HP";
+
 const demonGuy = {
     health: 100,
-    //want to add a curse function that will kill 3 or 5 moves after landing, in case the demon gets really unlucky and only roles like single didget values
     dealDamage: function () {
         this.damage = Math.round(Math.random() * 100)
         return this.damage
@@ -118,7 +111,6 @@ const opener = {
         output.innerText = outputQuestion;
         this.responseFunc = responseFunc;
         this.buttons = buttons;
-        //i need to set all of the buttons to their corresponding 
         for(let i=0; i < buttons.length; i++){
             allButtons[i].innerText = buttons[i]
         }
@@ -134,10 +126,8 @@ for (i = 0; i < allButtons.length; i++) {
 }
 demonHealthbar.innerText = demonGuy.health + "HP";
 
-
-
 function startGame() {
-    populateInfoBox("Oh no, DeamonSlayer has encountered a wild Demon")
+    populateInfoBox((`Oh no, ${tanjiro.name} has encountered a blood starved Demon! Prepare yourself!`))
     console.log(tanjiro)
     tanjiro.startAnimation("idle")
     tanjiro.playAnimation()
@@ -145,8 +135,7 @@ function startGame() {
         if (myInput == "attack") {
             demonSlayerAttack()
         } else if (myInput == "defend") {
-            //want to add an option where wait will turn into defend and demonSlayer will reduce incoming damage by 20% or something
-            demonAttack() //demonGuy.damage 
+            defendOption()
         } else if (myInput == "run") {
             runOption()
         } else if (myInput == "shop"){
@@ -165,58 +154,101 @@ function runOption() {
             else opener.close()
         })
     } if ((run) < 50) {
-        populateInfoBox("you failed to get away")
-        startGame()
+        populateInfoBox("You failed to get away")
+        tanjiro.startAnimation("idle")
+        tanjiro.playAnimation()
     }
 }
 
-function shop(){
-    //have to finish costs 
-    opener.question("what will you buy?", [`Potion${potion.cost}`, `Antidote${antidote.cost}` , `Super Potion${superPotion.cost}`, `Ether${ether.cost}`], myInput => {
-        if(myInput == "Potion") {
+function defendOption(){
+    populateInfoBox(`${tanjiro.name} defended the attack`)
+}
 
+function shop(){
+    populateInfoBox("Potion: Heal 100HP \n Antidote: Remove Poison Status \n Super Potion: Heal 250HP \n Ether: Heal All HP")
+    opener.question("what will you buy?", [`Potion $${potion.cost}`, `Antidote $${antidote.cost}` , `Super Potion $${superPotion.cost}`, `Ether $${ether.cost}`], myInput => {
+        if(myInput == "Potion") {
+            populateInfoBox(`${tanjiro.name} Healed for 100HP`)
+        }
+        if (myInput == "Antidote") {
+            populateInfoBox(`${tanjiro.name} Cured Poison`)
+        }
+        if (myInput == "Super Potion") {
+            populateInfoBox(`${tanjiro.name} Healed for 250HP`)
+        }
+        if (myInput == "Ether") {
+            populateInfoBox(`${tanjiro.name}  Healed all HP`)
         }
     })
 }
 
-function demonSlayerAttack(attack, health) {
+function demonSlayerAttack() {
     tanjiro.whichAttack((attack) => {
-        let damage = tanjiro.attacks[attack].damage
-        // (place for codes that would add effectt to attack)
+        let damageNum = tanjiro.attacks[attack].damage
         if (tanjiro.attacks[attack].missChance >= Math.random() * 100) {
             populateInfoBox("attack missed")
+            opener.question("What will you do slayer?", ["Attack", "Defend", "Run", "Shop"] ,myInput => {
+                if (myInput == "attack") {
+                    demonSlayerAttack()
+                } else if (myInput == "defend") {
+                    defendOption()
+                } else if (myInput == "run") {
+                    runOption()
+                } else if (myInput == "shop"){
+                    shop()
+                } 
+            })
         } else {
-            demonGuy.health -= damage
-            populateInfoBox(attack, "has landed for", damage, "demon's health is now", demonGuy.health)
+            demonGuy.health -= damageNum
+            populateInfoBox(`${attack} has landed for ${damageNum} demon's health is now ${demonGuy.health}`)
+            opener.question("What will you do slayer?", ["Attack", "Defend", "Run", "Shop"] ,myInput => {
+                if (myInput == "attack") {
+                    demonSlayerAttack()
+                } else if (myInput == "defend") {
+                    defendOption()
+                } else if (myInput == "run") {
+                    runOption()
+                } else if (myInput == "shop"){
+                    shop()
+                } 
+            })
         }
         if (demonGuy.health <= 0) {
             populateInfoBox("The Demon has been slain, you win!");
-            opener.question("will you play again?", myInput => {
+            opener.question("will you play again?", ["yes", "no", "...", "..."], myInput => {
                 if (myInput == "yes") {
                     startGame()
                 }
                 else opener.close()
             })
         }
-        else (demonAttack())
+        else setTimeout(demonAttack, 1500)
     })
 }
-function demonAttack(attack, health) {
 
-
+function demonAttack() {
     tanjiro.health -= demonGuy.dealDamage()
-    populateInfoBox("Demon's dark claw has landed for,", demonGuy.damage, "tanjiro's health is now", (tanjiro.health))
+    populateInfoBox(`Demon's dark claw has landed for ${demonGuy.damage} ${tanjiro.name}'s health is now, ${tanjiro.health}`)
+    opener.question("What will you do slayer?", ["Attack", "Defend", "Run", "Shop"] ,myInput => {
+        if (myInput == "attack") {
+            demonSlayerAttack()
+        } else if (myInput == "defend") {
+            defendOption()
+        } else if (myInput == "run") {
+            runOption()
+        } else if (myInput == "shop"){
+            shop()
+        } 
+    })
     if (tanjiro.health <= 0) {
         populateInfoBox(demonSlayer.name + "has fainted, you lose");
         opener.question("will you play again?", myInput => {
             if (myInput == "yes") {
-                startGame()
+                setTimeout(startGame, 1500)
             }
-            else opener.close()
-            //opener.close will close out the program when it dosent have a yes value enterned 
+            else opener.close() 
         })
     }
-    else (demonSlayerAttack())
 }
 
 startGame()
