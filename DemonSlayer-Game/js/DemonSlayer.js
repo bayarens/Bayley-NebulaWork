@@ -16,21 +16,6 @@ const demonGuy = {
 const openingQ = document.getElementById('openingQuestion')
 const allButtons = document.querySelectorAll(".submit")
 
-// const opener = {
-//     question({outputQuestion, buttons, responseFunc}) {
-//         output.innerText = outputQuestion;
-//         this.responseFunc = responseFunc;
-//         this.buttons = buttons;
-//         for(let i=0; i < buttons.length; i++){
-//             allButtons[i].innerText = buttons[i]
-//         }
-//     },
-//     submitQuestion(e) {
-//         console.log(e)
-//         opener.responseFunc(e.target.innerText.toLowerCase())
-//     },
-// }
-
 for (i = 0; i < allButtons.length; i++) {
     allButtons[i].addEventListener("click", opener.submitQuestion)
 }
@@ -46,9 +31,13 @@ function startGame() {
 
 function runOption() {
     const run = (Math.floor(Math.random() * 100))
-    if ((run) >= 50) {
-        populateInfoBox("You succesfully ran away")
-        opener.question(runOptions)
+    if (run >= 50) {
+        populateInfoBox("You got away! Death before dishonor, kill yourself")
+    }   else if ((run) < 50) {
+        populateInfoBox("You failed to get away")
+        tanjiro.startAnimation("idle")
+        tanjiro.playAnimation()
+        setTimeout(demonAttack, 1500)
     }
 }
 
@@ -92,12 +81,7 @@ function demonSlayerAttack() {
         }
         if (demonGuy.health <= 0) {
             populateInfoBox("The Demon has been slain, you win!");
-            opener.question("will you play again?", ["yes", "no", "...", "..."], myInput => {
-                if (myInput == "yes") {
-                    startGame()
-                }
-                else opener.close()
-            })
+            opener.question(endGameOptions)
         }
         else setTimeout(demonAttack, 1500)
     })

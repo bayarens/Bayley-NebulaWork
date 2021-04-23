@@ -20,7 +20,6 @@ const opener = {
         }
     },
     submitQuestion(e) {
-        console.log(e, "<--")
         opener.responseFunc(e.target.innerText.toLowerCase())
     },
 }
@@ -128,19 +127,24 @@ const startGameOptions = new MenuOption("What will you do slayer?", ["Attack", "
     }
 })
 
-const runOptions = new MenuOption("will you play agian?", ["yes", "no", "...", "..."], myInput => {
-    const run = (Math.floor(Math.random() * 100))
+const endGameOptions = new MenuOption("Congratulations! Will you play continue on?", ["Yes", "No", "...", "..."], myInput => {
     if (myInput == "yes") {
         startGame()
     }
     else opener.close()
-    if ((run) < 50) {
-        populateInfoBox("You failed to get away")
-        tanjiro.startAnimation("idle")
-        tanjiro.playAnimation()
-        demonAttack()
-    }
 })
+
+// const runOptions = new MenuOption("will you play agian?", ["yes", "no", "...", "..."], myInput => {
+//     const run = (Math.floor(Math.random() * 100))
+//     if (run >= 50) {
+//         populateInfoBox("You got away! Death before dishonor, kill yourself")
+//     }   else if ((run) < 50) {
+//         populateInfoBox("You failed to get away")
+//         tanjiro.startAnimation("idle")
+//         tanjiro.playAnimation()
+//         setTimeout(demonAttack, 1500)
+//     }
+// })
 
 
     const tanjiroAttackOptions = {
