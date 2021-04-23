@@ -10,6 +10,14 @@ function populateInfoBox(text) {
     infoBox.innerText = text
 }
 
+function changeSlayerHealth(){
+
+}
+
+function changeDemonHealth(){
+
+}
+
 function draw() {
 }
 
@@ -51,6 +59,7 @@ class Player {
         this.draw()
     }
 }
+
 const tanjiro = new Player("Tanjiro", 500) 
 
 class Enemy {
@@ -87,7 +96,7 @@ class Shop {
 
 const potion = new Shop("Potion", "heal100HP", 10) 
 const superPotion = new Shop("SuperPotion", "heal250HP", 25)
-const antidote = new Shop("Antidote", "rmvPoison", 15)
+const antidote = new Shop("Antidote", "rmvStatusEffect", 15)
 const ether = new Shop("Ether", "healAllHP", 50)
 
 slayerHealthbar.innerText = tanjiro.health + "HP";
@@ -100,8 +109,6 @@ const demonGuy = {
     },
     damage: Math.round(Math.random() * 100)
 }
-
-
 
 const openingQ = document.getElementById('openingQuestion')
 const allButtons = document.querySelectorAll(".submit")
@@ -143,6 +150,7 @@ function startGame() {
         } 
     })
 }
+
 function runOption() {
     const run = (Math.floor(Math.random() * 100))
     if ((run) >= 50) {
@@ -165,13 +173,13 @@ function defendOption(){
 }
 
 function shop(){
-    populateInfoBox("Potion: Heal 100HP \n Antidote: Remove Poison Status \n Super Potion: Heal 250HP \n Ether: Heal All HP")
+    populateInfoBox("Potion: Heal 100HP \n Antidote: Remove Status Effect \n Super Potion: Heal 250HP \n Ether: Heal All HP")
     opener.question("what will you buy?", [`Potion $${potion.cost}`, `Antidote $${antidote.cost}` , `Super Potion $${superPotion.cost}`, `Ether $${ether.cost}`], myInput => {
         if(myInput == "Potion") {
             populateInfoBox(`${tanjiro.name} Healed for 100HP`)
         }
         if (myInput == "Antidote") {
-            populateInfoBox(`${tanjiro.name} Cured Poison`)
+            populateInfoBox(`${tanjiro.name} Removed Status Effect`)
         }
         if (myInput == "Super Potion") {
             populateInfoBox(`${tanjiro.name} Healed for 250HP`)
@@ -200,6 +208,7 @@ function demonSlayerAttack() {
             })
         } else {
             demonGuy.health -= damageNum
+            demonHealthbar.innerText = demonGuy.health + "HP";
             populateInfoBox(`${attack} has landed for ${damageNum} demon's health is now ${demonGuy.health}`)
             opener.question("What will you do slayer?", ["Attack", "Defend", "Run", "Shop"] ,myInput => {
                 if (myInput == "attack") {
@@ -228,6 +237,7 @@ function demonSlayerAttack() {
 
 function demonAttack() {
     tanjiro.health -= demonGuy.dealDamage()
+    slayerHealthbar.innerText = tanjiro.health + "HP";
     populateInfoBox(`Demon's dark claw has landed for ${demonGuy.damage} ${tanjiro.name}'s health is now, ${tanjiro.health}`)
     opener.question("What will you do slayer?", ["Attack", "Defend", "Run", "Shop"] ,myInput => {
         if (myInput == "attack") {
