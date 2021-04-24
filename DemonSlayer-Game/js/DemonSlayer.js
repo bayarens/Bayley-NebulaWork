@@ -3,6 +3,7 @@ function populateInfoBox(text) {
 }
 function draw() {
 }
+
 slayerHealthbar.innerText = tanjiro.health + "HP";
 
 const openingQ = document.getElementById('openingQuestion')

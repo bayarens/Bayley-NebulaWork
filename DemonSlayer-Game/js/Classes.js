@@ -5,6 +5,7 @@ let imageLoader = document.querySelectorAll("#imageLoader img")
 const slayerHealthbar = document.querySelector("#slayerHealthBar")
 const demonHealthbar = document.querySelector("#demonHealthBar")
 const infoBox = document.querySelector("#infoDisplay")
+const money = document.querySelector("#moneyCounter")
 const tanjiroAttackInfo = "Water Wheel: \n Damage: 50 Miss chance: 30% bleed: 5dmg \n \n Twisting Whirlpool: \n Damage: 20, Miss chance: 10% Healing: 20HP \n \n Striking Tide: \n Damage: 10 Miss chance: 2% Critcal hit chance: 35% \n \nConstant Flux: \n Damage: 100 Miss chance: 66%"
 const opener = {
     question({ outputQuestion, buttons, responseFunc }) {
@@ -22,8 +23,10 @@ const opener = {
 
 class Player {
     constructor(name, health, defense) {
-        this.health = health;
         this.name = name;
+        this.health = health;
+        this.maxHealth = health
+        this.minHealth = 0;
         this.defense = defense
         this.money = 0;
         this.defending = false
@@ -60,6 +63,18 @@ class Player {
         this.img = this.imgQueue[this.currentImg]
         this.draw()
     }
+    changeHealth(num) {
+        this.health -= num
+        if (this.health > this.maxHealth) {
+            this.health = this.maxHealth
+        }
+        slayerHealthbar.innerText = this.health + "HP";
+        let width = (this.health / this.maxHealth * 400);
+        slayerHealthbar.style.width = width + "px";
+    }
+    moneyCounter(){
+        money.innerText = tanjiro.money
+    }
 }
 
 const tanjiro = new Player("Tanjiro", 500, 25)
@@ -67,12 +82,14 @@ const zenitsu = new Player("Zenitsu", 350, 10)
 const inosuke = new Player("Inousuke", 650, 45)
 
 class Enemy {
-    constructor(health, damageMin, damageMax, extraAbility = null, order) {
+    constructor(health, damageMin, damageMax, extraAbility = null, moneyDropped) {
         this.health = health;
+        this.maxHealth = health;
+        this.minHealth = 0;
         this.damageMin = damageMin;
         this.damageMax = damageMax;
         this.extraAbility = extraAbility;
-        this.order = order;
+        this.moneyDropped = moneyDropped;
     }
     performExtraAbility() {
         if (this.extraAbility) {
@@ -84,11 +101,16 @@ class Enemy {
     dealDamage() {
         return Math.round(Math.random() * (this.damageMax - this.damageMin) + this.damageMin);
     }
+    changeHealth(){
+        demonHealthbar.innerText = demonGuy.health + "HP";
+        let width = this.health / this.maxHealth * this.health
+        demonHealthbar.style.width = width + "px";
+    }
 }
 
-const demonGuy = new Enemy(100, 20, 40, 1)
-const demonMiniB = new Enemy(300, 50, 80, 2)
-const demonBoss = new Enemy(500, 100, 200, 3)
+const demonGuy = new Enemy(100, 20, 40, 50)
+const demonMiniB = new Enemy(300, 50, 80, 125)
+const demonBoss = new Enemy(500, 100, 200, 200)
 
 class Shop {
     constructor(name, effect, cost) {
@@ -131,40 +153,53 @@ const endGameOptions = new MenuOption("Congratulations! Will you continue on?", 
     else opener.close()
 })
 
-const shopOptions = new MenuOption("Whata ya buying?", ["Potion $10", "Antidote $15" , "Super Potion $25", "Ether $50"], myInput => {
-        if(myInput == "Potion") {
-            populateInfoBox(`${tanjiro.name} Healed for 100HP`)
+const shopOptions = new MenuOption("Whata ya buying?", ["Potion $10", "Antidote $15", "Super Potion $25", "Ether $50"], myInput => {
+    if (myInput == "potion $10") {
+        tanjiro.health += 100
+        if (tanjiro.health > tanjiro.maxHealth) {
+            tanjiro.health = tanjiro.maxHealth
         }
-        if (myInput == "Antidote") {
-            populateInfoBox(`${tanjiro.name} Removed Status Effect`)
+        populateInfoBox(`${tanjiro.name} Healed for 100HP`)
+        slayerHealthbar.innerText = tanjiro.health + "HP";
+    }
+    if (myInput == "antidote $15") {
+        populateInfoBox(`${tanjiro.name} Removed Status Effect`)
+    }
+    if (myInput == "super potion $25") {
+        tanjiro.health += 250
+        if (tanjiro.health > tanjiro.maxHealth) {
+            tanjiro.health = tanjiro.maxHealth
         }
-        if (myInput == "Super Potion") {
-            populateInfoBox(`${tanjiro.name} Healed for 250HP`)
-        }
-        if (myInput == "Ether") {
-            populateInfoBox(`${tanjiro.name}  Healed all HP`)
-        }
-    })
+        slayerHealthbar.innerText = tanjiro.health + "HP";
+        populateInfoBox(`${tanjiro.name} Healed for 250HP`)
+    }
+    if (myInput == "ether $50") {
+        tanjiro.health = tanjiro.maxHealth
+        slayerHealthbar.innerText = tanjiro.health + "HP";
+        populateInfoBox(`${tanjiro.name}  Healed all HP`)
+    }
+    setTimeout(demonAttack, 1500)
+})
 
 const runOptions = new MenuOption("will you pick up the sword again?", ["yes", "no", "...", "..."], myInput => {
     const run = (Math.floor(Math.random() * 100))
     if (run >= 50) {
-    }   else if ((run) < 50) {
+    } else if ((run) < 50) {
         tanjiro.startAnimation("idle")
         tanjiro.playAnimation()
         setTimeout(demonAttack, 1500)
     }
-    if (myInput == "yes"){
+    if (myInput == "yes") {
         opener.question(startGameOptions)
         populateInfoBox("")
     }
 })
 
 
-    const tanjiroAttackOptions = {
-        outputQuestion: "Which attack will you use?",
-        buttons: ["Water Wheel", "Twisting Whirlpool", "Striking Tide", "Constant Flux"],
-        responseFunc: null
-    }
+const tanjiroAttackOptions = {
+    outputQuestion: "Which attack will you use?",
+    buttons: ["Water Wheel", "Twisting Whirlpool", "Striking Tide", "Constant Flux"],
+    responseFunc: null
+}
 
-    const playerAttackOptions = new MenuOption("Which attack will you use?", tanjiroAttackOptions.buttons, myInput => {})
+const playerAttackOptions = new MenuOption("Which attack will you use?", tanjiroAttackOptions.buttons, myInput => { })

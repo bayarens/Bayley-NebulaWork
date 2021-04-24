@@ -56,7 +56,13 @@ cursor: pointer;
     border: chartreuse solid 3px;
     background-color: chartreuse;
 }
-
+#slayerDamageBar{
+    position: absolute;
+    width: 400px;
+    height: 30px;
+    border: red solid 3px;
+    background-color: red;
+}
 #demonHealthBar{
     position: absolute;
     right: 0; 
@@ -68,6 +74,17 @@ cursor: pointer;
     text-align: end;
 }
 
+#demonDamageBar{
+    position: absolute;
+    right: 0; 
+    justify-content: end;
+    width: 400px;
+    height: 30px;
+    border: red solid 3px;
+    background-color: red;
+    text-align: end;
+}
+
 #infoDisplay{
     border: burlywood solid 3px;
     background-color: burlywood;
@@ -76,4 +93,15 @@ cursor: pointer;
     display: flex;
     flex-direction: row;
     overflow: scroll;
+}
+
+#moneyCounter{
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    border: gold solid 3px;
+    background-color: gold;
+    width: 150;
+    height: 100;
+    display: flex;
 }
