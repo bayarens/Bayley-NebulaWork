@@ -12,4 +12,5 @@ make health bars turn red for missing health/ also reset them after start game f
 I know the play animation function keeps playing over on top of itself and messes up the idle animation, fix that 
 make it so that if you fail to run away demon attack plays out 
 ^ same for defend
-define close with function
+define close with function-b/c there is no gameover option 
+Enemy's damage ranges arent working

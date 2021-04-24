@@ -6,10 +6,6 @@ const slayerHealthbar = document.querySelector("#slayerHealthBar")
 const demonHealthbar = document.querySelector("#demonHealthBar")
 const infoBox = document.querySelector("#infoDisplay")
 const tanjiroAttackInfo = "Water Wheel: \n Damage: 50 Miss chance: 30% bleed: 5dmg \n \n Twisting Whirlpool: \n Damage: 20, Miss chance: 10% Healing: 20HP \n \n Striking Tide: \n Damage: 10 Miss chance: 2% Critcal hit chance: 35% \n \nConstant Flux: \n Damage: 100 Miss chance: 66%"
-
-
-
-
 const opener = {
     question({ outputQuestion, buttons, responseFunc }) {
         output.innerText = outputQuestion;
@@ -30,9 +26,9 @@ class Player {
         this.name = name;
         this.defense = defense
         this.money = 0;
+        this.defending = false
     }
     whichAttack = function (f) {
-        console.log("some string")
         tanjiroAttackOptions.responseFunc = attack => f(attack)
         opener.question(tanjiroAttackOptions)
         populateInfoBox(tanjiroAttackInfo)
@@ -71,11 +67,12 @@ const zenitsu = new Player("Zenitsu", 350, 10)
 const inosuke = new Player("Inousuke", 650, 45)
 
 class Enemy {
-    constructor(health, damageMin, damageMax, extraAbility = null) {
+    constructor(health, damageMin, damageMax, extraAbility = null, order) {
         this.health = health;
         this.damageMin = damageMin;
         this.damageMax = damageMax;
         this.extraAbility = extraAbility;
+        this.order = order;
     }
     performExtraAbility() {
         if (this.extraAbility) {
@@ -89,10 +86,9 @@ class Enemy {
     }
 }
 
-const demon = new Enemy(100, 20, 40)
-const demonLvl2 = new Enemy(150, 30, 60)
-const demonMiniB = new Enemy(300, 50, 80)
-const demonBoss = new Enemy(500, 100, 200)
+const demonGuy = new Enemy(100, 20, 40, 1)
+const demonMiniB = new Enemy(300, 50, 80, 2)
+const demonBoss = new Enemy(500, 100, 200, 3)
 
 class Shop {
     constructor(name, effect, cost) {
@@ -101,6 +97,7 @@ class Shop {
         this.cost = cost;
     }
 }
+
 
 const potion = new Shop("Potion", "heal100HP", 10)
 const superPotion = new Shop("SuperPotion", "heal250HP", 25)
@@ -114,8 +111,8 @@ class MenuOption {
         this.responseFunc = responseFunc;
     }
 }
-
 const startGameOptions = new MenuOption("What will you do slayer?", ["Attack", "Defend", "Run", "Shop"], myInput => {
+    demonHealthbar.innerText = demonGuy.health + "HP";
     if (myInput == "attack") {
         demonSlayerAttack()
     } else if (myInput == "defend") {
@@ -127,24 +124,41 @@ const startGameOptions = new MenuOption("What will you do slayer?", ["Attack", "
     }
 })
 
-const endGameOptions = new MenuOption("Congratulations! Will you play continue on?", ["Yes", "No", "...", "..."], myInput => {
+const endGameOptions = new MenuOption("Congratulations! Will you continue on?", ["Yes", "No", "...", "..."], myInput => {
     if (myInput == "yes") {
         startGame()
     }
     else opener.close()
 })
 
-// const runOptions = new MenuOption("will you play agian?", ["yes", "no", "...", "..."], myInput => {
-//     const run = (Math.floor(Math.random() * 100))
-//     if (run >= 50) {
-//         populateInfoBox("You got away! Death before dishonor, kill yourself")
-//     }   else if ((run) < 50) {
-//         populateInfoBox("You failed to get away")
-//         tanjiro.startAnimation("idle")
-//         tanjiro.playAnimation()
-//         setTimeout(demonAttack, 1500)
-//     }
-// })
+const shopOptions = new MenuOption("Whata ya buying?", ["Potion $10", "Antidote $15" , "Super Potion $25", "Ether $50"], myInput => {
+        if(myInput == "Potion") {
+            populateInfoBox(`${tanjiro.name} Healed for 100HP`)
+        }
+        if (myInput == "Antidote") {
+            populateInfoBox(`${tanjiro.name} Removed Status Effect`)
+        }
+        if (myInput == "Super Potion") {
+            populateInfoBox(`${tanjiro.name} Healed for 250HP`)
+        }
+        if (myInput == "Ether") {
+            populateInfoBox(`${tanjiro.name}  Healed all HP`)
+        }
+    })
+
+const runOptions = new MenuOption("will you pick up the sword again?", ["yes", "no", "...", "..."], myInput => {
+    const run = (Math.floor(Math.random() * 100))
+    if (run >= 50) {
+    }   else if ((run) < 50) {
+        tanjiro.startAnimation("idle")
+        tanjiro.playAnimation()
+        setTimeout(demonAttack, 1500)
+    }
+    if (myInput == "yes"){
+        opener.question(startGameOptions)
+        populateInfoBox("")
+    }
+})
 
 
     const tanjiroAttackOptions = {
