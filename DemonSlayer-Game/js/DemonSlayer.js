@@ -6,6 +6,9 @@ function draw() {
 
 slayerHealthbar.innerText = tanjiro.health + "HP";
 
+money.innerText = `$${tanjiro.money}`
+
+
 const openingQ = document.getElementById('openingQuestion')
 const allButtons = document.querySelectorAll(".submit")
 
@@ -45,6 +48,10 @@ function defendOption(){
 function shop(){
     populateInfoBox("Potion: Heal 100HP \n Antidote: Remove Status Effect \n Super Potion: Heal 250HP \n Ether: Heal All HP")
     opener.question(shopOptions)
+    if(tanjiro.money < this.cost){
+        populateInfoBox("you don't have enough money for this")
+        opener.question(startGameOptions)
+    }
 }
 
 function demonSlayerAttack() {
@@ -54,8 +61,7 @@ function demonSlayerAttack() {
             populateInfoBox("attack missed")
             opener.question(startGameOptions)
         } else {
-            demonGuy.health -= damageNum
-            demonHealthbar.innerText = demonGuy.health + "HP";
+            demonGuy.changeHealth(damageNum)
             populateInfoBox(`${attack} has landed for ${damageNum} demon's health is now ${demonGuy.health}`)
             opener.question(startGameOptions)
         }
@@ -72,8 +78,7 @@ function demonAttack() {
     if (tanjiro.defending === true){
         testdamge = Math.round((testdamge * tanjiro.defense) /100) 
     } 
-    tanjiro.health -= testdamge
-    slayerHealthbar.innerText = tanjiro.health + "HP";
+    tanjiro.changeHealth(testdamge)
     populateInfoBox(`Demon's dark claw has landed for ${testdamge} ${tanjiro.name}'s health is now, ${tanjiro.health}`)
     opener.question(startGameOptions)
     if (tanjiro.health <= 0) {

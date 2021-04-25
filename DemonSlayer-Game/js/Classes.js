@@ -6,7 +6,7 @@ const slayerHealthbar = document.querySelector("#slayerHealthBar")
 const demonHealthbar = document.querySelector("#demonHealthBar")
 const infoBox = document.querySelector("#infoDisplay")
 const money = document.querySelector("#moneyCounter")
-const tanjiroAttackInfo = "Water Wheel: \n Damage: 50 Miss chance: 30% bleed: 5dmg \n \n Twisting Whirlpool: \n Damage: 20, Miss chance: 10% Healing: 20HP \n \n Striking Tide: \n Damage: 10 Miss chance: 2% Critcal hit chance: 35% \n \nConstant Flux: \n Damage: 100 Miss chance: 66%"
+const tanjiroAttackInfo = "Water Wheel: \n Damage: 50 Miss chance: 20% bleed: 5dmg \n \n Twisting Whirlpool: \n Damage: 20, Miss chance: 10% Healing: 20HP \n \n Striking Tide: \n Damage: 10 Miss chance: 2% Critcal hit chance: 35% \n \nConstant Flux: \n Damage: 100 Miss chance: 66%"
 const opener = {
     question({ outputQuestion, buttons, responseFunc }) {
         output.innerText = outputQuestion;
@@ -37,7 +37,7 @@ class Player {
         populateInfoBox(tanjiroAttackInfo)
     }
     attacks = {
-        "water wheel": { damage: 50, missChance: 30, /*bleedValue: 5*/ },
+        "water wheel": { damage: 50, missChance: 20, /*bleedValue: 5*/ },
         "twisting whirlpool": { damage: 20, missChance: 10, /*healValue: 20*/ },
         "striking tide": { damage: 10, missChance: 2, /*critChance: 35*/ },
         "constant flux": { damage: 100, missChance: 66 },
@@ -69,11 +69,8 @@ class Player {
             this.health = this.maxHealth
         }
         slayerHealthbar.innerText = this.health + "HP";
-        let width = (this.health / this.maxHealth * 400);
+        let width = this.health / this.maxHealth * 400;
         slayerHealthbar.style.width = width + "px";
-    }
-    moneyCounter(){
-        money.innerText = tanjiro.money
     }
 }
 
@@ -101,11 +98,18 @@ class Enemy {
     dealDamage() {
         return Math.round(Math.random() * (this.damageMax - this.damageMin) + this.damageMin);
     }
-    changeHealth(){
-        demonHealthbar.innerText = demonGuy.health + "HP";
-        let width = this.health / this.maxHealth * this.health
+    changeHealth(num){
+        this.health -= num
+        demonHealthbar.innerText = this.health + "HP";
+        let width = this.health / this.maxHealth * 400
         demonHealthbar.style.width = width + "px";
     }
+    // addMoney(){
+    //     if(demonGuy.health = 0){
+    //         tanjiro.money += demonGuy.moneyDropped
+    //         money.innerText = `$${tanjiro.money}`
+    //     }
+    // }
 }
 
 const demonGuy = new Enemy(100, 20, 40, 50)
@@ -155,29 +159,29 @@ const endGameOptions = new MenuOption("Congratulations! Will you continue on?", 
 
 const shopOptions = new MenuOption("Whata ya buying?", ["Potion $10", "Antidote $15", "Super Potion $25", "Ether $50"], myInput => {
     if (myInput == "potion $10") {
-        tanjiro.health += 100
-        if (tanjiro.health > tanjiro.maxHealth) {
-            tanjiro.health = tanjiro.maxHealth
-        }
+        tanjiro.changeHealth(-100)
+        tanjiro.money -= this.cost
         populateInfoBox(`${tanjiro.name} Healed for 100HP`)
-        slayerHealthbar.innerText = tanjiro.health + "HP";
     }
     if (myInput == "antidote $15") {
+        tanjiro.money -= this.cost
         populateInfoBox(`${tanjiro.name} Removed Status Effect`)
     }
     if (myInput == "super potion $25") {
-        tanjiro.health += 250
-        if (tanjiro.health > tanjiro.maxHealth) {
-            tanjiro.health = tanjiro.maxHealth
-        }
-        slayerHealthbar.innerText = tanjiro.health + "HP";
+        tanjiro.changeHealth(-250)
+        tanjiro.money -= this.cost
         populateInfoBox(`${tanjiro.name} Healed for 250HP`)
     }
     if (myInput == "ether $50") {
-        tanjiro.health = tanjiro.maxHealth
-        slayerHealthbar.innerText = tanjiro.health + "HP";
+        tanjiro.changeHealth(-(tanjiro.maxHealth - tanjiro.health))
+        tanjiro.money -= this.cost
         populateInfoBox(`${tanjiro.name}  Healed all HP`)
+        
     }
+    // if(tanjiro.money < this.cost){
+    //     populateInfoBox("you don't have enough money for this")
+    //     opener.question(startGameOptions)
+    // }
     setTimeout(demonAttack, 1500)
 })
 

@@ -9,6 +9,7 @@ body{
 }
 
 #inputBox{
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -55,6 +56,7 @@ cursor: pointer;
     height: 30px;
     border: chartreuse solid 3px;
     background-color: chartreuse;
+    transition: all 0.5s;
 }
 #slayerDamageBar{
     position: absolute;
@@ -72,6 +74,7 @@ cursor: pointer;
     border: chartreuse solid 3px;
     background-color: chartreuse;
     text-align: end;
+    transition: all 0.5s;
 }
 
 #demonDamageBar{
@@ -101,7 +104,9 @@ cursor: pointer;
     flex-wrap: wrap;
     border: gold solid 3px;
     background-color: gold;
-    width: 150;
-    height: 100;
+    width: 40px;
+    height: 20px;
     display: flex;
+    right: -50px;
+    text-align: end;
 }
