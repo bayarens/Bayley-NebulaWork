@@ -98,25 +98,25 @@ class Enemy {
     dealDamage() {
         return Math.round(Math.random() * (this.damageMax - this.damageMin) + this.damageMin);
     }
-    changeHealth(num){
+    changeHealth(num) {
         this.health -= num
         demonHealthbar.innerText = this.health + "HP";
         let width = this.health / this.maxHealth * 400
         demonHealthbar.style.width = width + "px";
     }
-    // addMoney(){
-    //     if(demonGuy.health = 0){
-    //         tanjiro.money += demonGuy.moneyDropped
-    //         money.innerText = `$${tanjiro.money}`
-    //     }
-    // }
+    addMoney() {
+        if (demonGuy.health <= 0) {
+            tanjiro.money += demonGuy.moneyDropped
+            money.innerText = `$${tanjiro.money}`
+        }
+    }
 }
 
-const demonGuy = new Enemy(100, 20, 40, 50)
-const demonMiniB = new Enemy(300, 50, 80, 125)
-const demonBoss = new Enemy(500, 100, 200, 200)
+const demonGuy = new Enemy(100, 20, 40, null, 50)
+const demonMiniB = new Enemy(300, 50, 80, null, 125)
+const demonBoss = new Enemy(500, 100, 200, null, 200)
 
-class Shop {
+class Item {
     constructor(name, effect, cost) {
         this.name = name
         this.effect = effect
@@ -124,11 +124,17 @@ class Shop {
     }
 }
 
+const potion = new Item("Potion", "heal100HP", 10)
+const superPotion = new Item("SuperPotion", "heal250HP", 25)
+const antidote = new Item("Antidote", "rmvStatusEffect", 15)
+const ether = new Item("Ether", "healAllHP", 50)
 
-const potion = new Shop("Potion", "heal100HP", 10)
-const superPotion = new Shop("SuperPotion", "heal250HP", 25)
-const antidote = new Shop("Antidote", "rmvStatusEffect", 15)
-const ether = new Shop("Ether", "healAllHP", 50)
+const shopCost = {
+    "potion $10": 10,
+    "antidote $15": 15,
+    "super potion $25": 25,
+    "ether $50": 50
+}
 
 class MenuOption {
     constructor(outputQuestion, buttons, responseFunc) {
@@ -157,31 +163,32 @@ const endGameOptions = new MenuOption("Congratulations! Will you continue on?", 
     else opener.close()
 })
 
-const shopOptions = new MenuOption("Whata ya buying?", ["Potion $10", "Antidote $15", "Super Potion $25", "Ether $50"], myInput => {
-    if (myInput == "potion $10") {
-        tanjiro.changeHealth(-100)
-        tanjiro.money -= this.cost
-        populateInfoBox(`${tanjiro.name} Healed for 100HP`)
+const shopOptions = new MenuOption("Whata ya buying?", ["Potion $10", "Antidote $15", "Super Potion $25", "Ether $50"] , myInput => {
+    console.log(tanjiro.money, myInput)
+    if (tanjiro.money < shopCost[myInput]) {
+        populateInfoBox("you don't have enough money for this")
+        opener.question(startGameOptions)
+    } else {
+        if (myInput == "potion $10") {
+            tanjiro.changeHealth(-100)
+            tanjiro.money -= potion.cost
+            populateInfoBox(`${tanjiro.name} Healed for 100HP`)
+        }
+        if (myInput == "antidote $15") {
+            tanjiro.money -= antidote.cost
+            populateInfoBox(`${tanjiro.name} Removed Status Effect`)
+        }
+        if (myInput == "super potion $25") {
+            tanjiro.changeHealth(-250)
+            tanjiro.money -= superPotion.cost
+            populateInfoBox(`${tanjiro.name} Healed for 250HP`)
+        }
+        if (myInput == "ether $50") {
+            tanjiro.changeHealth(-(tanjiro.maxHealth - tanjiro.health))
+            tanjiro.money -= ether.cost
+            populateInfoBox(`${tanjiro.name}  Healed all HP`)
+        }
     }
-    if (myInput == "antidote $15") {
-        tanjiro.money -= this.cost
-        populateInfoBox(`${tanjiro.name} Removed Status Effect`)
-    }
-    if (myInput == "super potion $25") {
-        tanjiro.changeHealth(-250)
-        tanjiro.money -= this.cost
-        populateInfoBox(`${tanjiro.name} Healed for 250HP`)
-    }
-    if (myInput == "ether $50") {
-        tanjiro.changeHealth(-(tanjiro.maxHealth - tanjiro.health))
-        tanjiro.money -= this.cost
-        populateInfoBox(`${tanjiro.name}  Healed all HP`)
-        
-    }
-    // if(tanjiro.money < this.cost){
-    //     populateInfoBox("you don't have enough money for this")
-    //     opener.question(startGameOptions)
-    // }
     setTimeout(demonAttack, 1500)
 })
 

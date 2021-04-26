@@ -1,6 +1,7 @@
 ## to-do:
+make money counter go up when you get money 
+make shop not function if you dont have enough money
 give attacks special atributes 
-create money counter 
 create start screen/ character select screen 
 create other 2 characters 
 create demon character sprite

@@ -48,10 +48,6 @@ function defendOption(){
 function shop(){
     populateInfoBox("Potion: Heal 100HP \n Antidote: Remove Status Effect \n Super Potion: Heal 250HP \n Ether: Heal All HP")
     opener.question(shopOptions)
-    if(tanjiro.money < this.cost){
-        populateInfoBox("you don't have enough money for this")
-        opener.question(startGameOptions)
-    }
 }
 
 function demonSlayerAttack() {
@@ -66,6 +62,7 @@ function demonSlayerAttack() {
             opener.question(startGameOptions)
         }
         if (demonGuy.health <= 0) {
+            demonGuy.addMoney()
             populateInfoBox("The Demon has been slain, you win!");
             opener.question(endGameOptions)
         }
