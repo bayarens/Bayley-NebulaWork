@@ -7,9 +7,9 @@ const slayerHealthbar = document.querySelector("#slayerHealthBar")
 const demonHealthbar = document.querySelector("#demonHealthBar")
 const infoBox = document.querySelector("#infoDisplay")
 const money = document.querySelector("#moneyCounter")
-const zenitsuAttackInfo = "";
-const inousukeAttackInfo = "";
-const tanjiroAttackInfo = "Water Wheel: \n Damage: 35 Miss chance: 20% bleed: 5dmg \n \n Twisting Whirlpool: \n Damage: 20, Miss chance: 10% Healing: 20HP \n \n Striking Tide: \n Damage: 10 Miss chance: 2% Critcal hit chance: 35% \n \nConstant Flux: \n Damage: 200 Miss chance: 66%"
+const zenitsuAttackInfo = "Thunder Clap: \n Damage: 40 Miss Chance: 10% Bleed: 5dmg \n\n Rice Spirit: \n Damage: 15 Miss Chance: 8% Healing: 35hp \n\n Heat Lighting: \n Damage: 10 Miss Chance: 5% Crit Chance: 75% \n\n God Speed: \n Damage: 280 Miss Chance: 75%";
+const inousukeAttackInfo = "Pierce: \n Damage: 20 Miss Chance: 15% Bleed: 20dmg \n\n Rip and Tear: \n Damage: 35 Miss Chance 5% Healing: 10hp \n\n Crazy Cutting: \n Damage: 15 Miss Chance 10% Crit Chance: 60% \n\n Whirling Fangs: Damage: 150 Miss Chance 50%";
+const tanjiroAttackInfo = "Water Wheel: \n Damage: 35 Miss chance: 20% Bleed: 10dmg \n\n Twisting Whirlpool: \n Damage: 20, Miss chance: 10% Healing: 20hp \n\n Striking Tide: \n Damage: 10 Miss chance: 2% Crit Chance: 35% \n\nConstant Flux: \n Damage: 200 Miss chance: 66%";
 const opener = {
     question({ outputQuestion, buttons, responseFunc }) {
         output.innerText = outputQuestion;
@@ -40,7 +40,7 @@ class Player {
         this.curseRounds = 0;
         if (name == "Tanjiro") {
             this.attacks = {
-                "water wheel": { damage: 35, missChance: 20, bleedValue: 5 },
+                "water wheel": { damage: 35, missChance: 20, bleedValue: 10 },
                 "twisting whirlpool": { damage: 20, missChance: 10, healValue: 20 },
                 "striking tide": { damage: 10, missChance: 2, critChance: 65 },
                 "constant flux": { damage: 200, missChance: 66 },
@@ -48,18 +48,18 @@ class Player {
         }
         if (name == "Zenitsu") {
             this.attacks = {
-                "water wheel": { damage: 35, missChance: 20, bleedValue: 5 },
-                "twisting whirlpool": { damage: 20, missChance: 10, healValue: 20 },
-                "striking tide": { damage: 10, missChance: 2, critChance: 65 },
-                "constant flux": { damage: 200, missChance: 66 },
+                "thunder clap": { damage: 40, missChance: 10, bleedValue: 5 },
+                "rice spirit": { damage: 15, missChance: 8, healValue: 35 },
+                "heat lighting": { damage: 10, missChance: 5, critChance: 75 },
+                "god speed": { damage: 280, missChance: 75 },
             }
         }
         if (name == "Inousuke") {
             this.attacks = {
-                "water wheel": { damage: 35, missChance: 20, bleedValue: 5 },
-                "twisting whirlpool": { damage: 20, missChance: 10, healValue: 20 },
-                "striking tide": { damage: 10, missChance: 2, critChance: 65 },
-                "constant flux": { damage: 200, missChance: 66 },
+                "pierce": { damage: 20, missChance: 15, bleedValue: 20 },
+                "rip and tear": { damage: 35, missChance: 5, healValue: 10 },
+                "crazy cutting": { damage: 15, missChance: 10, critChance: 60 },
+                "whirling fangs": { damage: 150, missChance: 50 },
             }
         }
     }

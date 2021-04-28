@@ -3,6 +3,7 @@ create other 2 characters
 create demon characters sprite - one done
 make game over screen/you win screen
 one global object calls draw on all stage objects(chosenChar + demonGuy) 
+make attacks and attack info for other chars
 
 money counter does not go down if an item is bought- done
 items that remove status effects don't - done
