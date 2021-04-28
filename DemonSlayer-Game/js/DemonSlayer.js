@@ -1,39 +1,41 @@
-const startScreen = document.querySelector("#startScreen")
-const startButton = document.querySelector("#startGame")
-const charScreen = document.querySelector("#charSelect")
-const tanjiroBut = document.querySelector("#Tanjiro")
-const zenitsuBut = document.querySelector("#Zenitsu")
-const inoskueBut = document.querySelector("#Inosuke")
-const gameScreen = document.querySelector("#gameWrapper")
+const startScreen = document.querySelector("#startScreen");
+const startButton = document.querySelector("#startGame");
+const charScreen = document.querySelector("#charSelect");
+const tanjiroBut = document.querySelector("#Tanjiro");
+const zenitsuBut = document.querySelector("#Zenitsu");
+const inoskueBut = document.querySelector("#Inosuke");
+const gameScreen = document.querySelector("#gameWrapper");
+
 
 startButton.addEventListener("click", () => {
     startScreen.classList.toggle("hide")
     charScreen.classList.toggle("hide")
-})
+});
 
 let chosenChar;
 function pickCharcter(picked) {
     chosenChar = picked;
+    playerAttackOptions = new MenuOption("Which attack will you use?", chosenChar.buttons, myInput => { })
     startGame();
-}
+};
 
 tanjiroBut.addEventListener("click", () => {
     pickCharcter(tanjiro);
     charScreen.classList.toggle("hide");
     gameScreen.classList.toggle("hide");
-})
+});
 
 zenitsuBut.addEventListener("click", () => {
     pickCharcter(zenitsu);
     charScreen.classList.toggle("hide");
     gameScreen.classList.toggle("hide");
-})
+});
 
-inoskueBut.addEventListener("click", () =>{
+inoskueBut.addEventListener("click", () => {
     pickCharcter(inosuke);
     charScreen.classList.toggle("hide");
     gameScreen.classList.toggle("hide");
-})
+});
 
 
 function populateInfoBox(text) {
@@ -165,12 +167,12 @@ function demonAttack() {
     }
 }
 
-function printMousePos(event) {
-    const rect = canvas.getBoundingClientRect()
-    const x = event.clientX - rect.left
-    const y = event.clientY - rect.top
-    console.log("x: " + x + " y: " + y)
-}
+// function printMousePos(event) {
+//     const rect = canvas.getBoundingClientRect()
+//     const x = event.clientX - rect.left
+//     const y = event.clientY - rect.top
+//     console.log("x: " + x + " y: " + y)
+// }
 
-canvas.addEventListener("click", printMousePos);
+// canvas.addEventListener("click", printMousePos);
 

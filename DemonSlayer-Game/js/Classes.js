@@ -11,8 +11,25 @@ const slayerHealthbar = document.querySelector("#slayerHealthBar");
 const demonHealthbar = document.querySelector("#demonHealthBar");
 const infoBox = document.querySelector("#infoDisplay");
 const money = document.querySelector("#moneyCounter");
+const tanjiroAttackOptions = {
+    outputQuestion: "Which attack will you use?",
+    buttons: ["Water Wheel", "Twisting Whirlpool", "Striking Tide", "Constant Flux"],
+    responseFunc: null
+};
+const zenitsuAttackOptions = {
+    outputQuestion: "Which attack will you use?",
+    buttons: ["Thunder Clap", "Rice Spirit", "Heat Lighting", "God Speed"],
+    responseFunc: null
+};
+const inosukeAttackOptions = {
+    outputQuestion: "Which attack will you use?",
+    buttons: ["Rip and Tear", "Pierce", "Crazy Cutting", "Whirling Fangs"],
+    responseFunc: null
+};
+
+let playerAttackInfo = "";
 const zenitsuAttackInfo = "Thunder Clap: \n Damage: 40 Miss Chance: 10% Bleed: 5dmg \n\n Rice Spirit: \n Damage: 15 Miss Chance: 8% Healing: 35hp \n\n Heat Lighting: \n Damage: 10 Miss Chance: 5% Crit Chance: 75% \n\n God Speed: \n Damage: 280 Miss Chance: 75%";
-const inousukeAttackInfo = "Pierce: \n Damage: 20 Miss Chance: 15% Bleed: 20dmg \n\n Rip and Tear: \n Damage: 35 Miss Chance 5% Healing: 10hp \n\n Crazy Cutting: \n Damage: 15 Miss Chance 10% Crit Chance: 60% \n\n Whirling Fangs: Damage: 150 Miss Chance 50%";
+const inousukeAttackInfo = "Rip and Tear: \n Damage: 20 Miss Chance: 15% Bleed: 20dmg \n\n Pierce: \n Damage: 35 Miss Chance 5% Healing: 10hp \n\n Crazy Cutting: \n Damage: 15 Miss Chance 10% Crit Chance: 60% \n\n Whirling Fangs: Damage: 150 Miss Chance 50%";
 const tanjiroAttackInfo = "Water Wheel: \n Damage: 35 Miss chance: 20% Bleed: 10dmg \n\n Twisting Whirlpool: \n Damage: 20, Miss chance: 10% Healing: 20hp \n\n Striking Tide: \n Damage: 10 Miss chance: 2% Crit Chance: 35% \n\nConstant Flux: \n Damage: 200 Miss chance: 66%";
 const opener = {
     question({ outputQuestion, buttons, responseFunc }) {
@@ -28,7 +45,14 @@ const opener = {
     },
 }
 
-let roundCounter = 0;
+class MenuOption {
+    constructor(outputQuestion, buttons, responseFunc) {
+        this.outputQuestion = outputQuestion;
+        this.buttons = buttons;
+        this.responseFunc = responseFunc;
+    }
+}
+
 
 class Player {
     constructor(name, health) {
@@ -49,6 +73,8 @@ class Player {
                 "striking tide": { damage: 10, missChance: 2, critChance: 65 },
                 "constant flux": { damage: 200, missChance: 66 },
             }
+            this.attackOptions = tanjiroAttackOptions;
+            this.playerAttackInfo = tanjiroAttackInfo;
         }
         if (name == "Zenitsu") {
             this.attacks = {
@@ -57,29 +83,53 @@ class Player {
                 "heat lighting": { damage: 10, missChance: 5, critChance: 75 },
                 "god speed": { damage: 280, missChance: 75 },
             }
+            this.attackOptions = zenitsuAttackOptions;
+            this.playerAttackInfo = zenitsuAttackInfo;
         }
         if (name == "Inousuke") {
             this.attacks = {
-                "pierce": { damage: 20, missChance: 15, bleedValue: 20 },
-                "rip and tear": { damage: 35, missChance: 5, healValue: 10 },
+                "rip and tear": { damage: 20, missChance: 15, bleedValue: 20 },
+                "pierce": { damage: 35, missChance: 5, healValue: 10 },
                 "crazy cutting": { damage: 15, missChance: 10, critChance: 60 },
                 "whirling fangs": { damage: 150, missChance: 50 },
             }
+            this.attackOptions = inosukeAttackOptions;
+            this.playerAttackInfo = inousukeAttackInfo;
         }
     }
     whichAttack = function (f) {
         tanjiroAttackOptions.responseFunc = attack => {
-            if (attack == "twisting whirlpool") {
-                chosenChar.changeHealth(-20);
-            }
             if (attack == "water wheel") {
                 demonGuy.bleed = true;
                 demonGuy.bleedRounds = 4;
             }
+            if (attack == "twisting whirlpool") {
+                chosenChar.changeHealth(-20);
+            }
             f(attack)
         }
-        opener.question(tanjiroAttackOptions)
-        populateInfoBox(tanjiroAttackInfo)
+        zenitsuAttackOptions.responseFunc = attack => {
+            if (attack == "thunder clap") {
+                demonGuy.bleed = true;
+                demonguy.bleedRounds = 4;
+            }
+            if (attack == "rice spirit") {
+                chosenChar.changeHealth(-35)
+            }
+            f(attack)
+        }
+        inosukeAttackOptions.responseFunc = attack => {
+            if (attack == "rip and tear") {
+                demonGuy.bleed = true;
+                demonGuy.bleedRounds = 4;
+            }
+            if (attack = "pierce") {
+                chosenChar.changeHealth(-10)
+            }
+            f(attack)
+        }
+        opener.question(playerAttackOptions)
+        populateInfoBox(playerAttackInfo)
     }
     x = 25
     y = 335
@@ -123,6 +173,8 @@ class Player {
 const tanjiro = new Player("Tanjiro", 500)
 const zenitsu = new Player("Zenitsu", 350)
 const inosuke = new Player("Inousuke", 650)
+
+
 
 class Enemy {
     constructor(name, health, damageMin, damageMax, extraAbility = null, moneyDropped) {
@@ -209,13 +261,6 @@ const shopCost = {
     "ether $50": 50
 }
 
-class MenuOption {
-    constructor(outputQuestion, buttons, responseFunc) {
-        this.outputQuestion = outputQuestion;
-        this.buttons = buttons;
-        this.responseFunc = responseFunc;
-    }
-}
 const startGameOptions = new MenuOption("What will you do slayer?", ["Attack", "Defend", "Run", "Shop"], myInput => {
     demonHealthbar.innerText = demonGuy.health + "HP";
     if (myInput == "attack") {
@@ -284,13 +329,3 @@ const runOptions = new MenuOption("will you pick up the sword again?", ["yes", "
     }
 })
 
-
-const tanjiroAttackOptions = {
-    outputQuestion: "Which attack will you use?",
-    buttons: ["Water Wheel", "Twisting Whirlpool", "Striking Tide", "Constant Flux"],
-    responseFunc: null
-}
-
-
-
-const playerAttackOptions = new MenuOption("Which attack will you use?", tanjiroAttackOptions.buttons, myInput => { })
