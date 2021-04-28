@@ -12,7 +12,6 @@ startButton.addEventListener("click", () => {
 })
 
 let chosenChar;
-
 function pickCharcter(picked) {
     chosenChar = picked;
     startGame();
@@ -24,8 +23,17 @@ tanjiroBut.addEventListener("click", () => {
     gameScreen.classList.toggle("hide");
 })
 
+zenitsuBut.addEventListener("click", () => {
+    pickCharcter(zenitsu);
+    charScreen.classList.toggle("hide");
+    gameScreen.classList.toggle("hide");
+})
 
-
+inoskueBut.addEventListener("click", () =>{
+    pickCharcter(inosuke);
+    charScreen.classList.toggle("hide");
+    gameScreen.classList.toggle("hide");
+})
 
 
 function populateInfoBox(text) {
