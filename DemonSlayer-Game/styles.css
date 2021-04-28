@@ -1,4 +1,51 @@
-body canvas{
+#startScreen{
+    display:flex;
+    align-items: center;
+    flex-direction:column;
+    background-image: url('https://wallpapercave.com/wp/wp4445515.jpg');
+    background-size:cover;
+    color:white;
+    text-shadow: 0 0 10px gray;
+    min-height: 100vh;
+    justify-content:space-around;
+}
+#startGame{
+    width: 80px;
+    cursor: pointer;
+    opacity: 0.7;
+}
+#startGame:hover{
+    opacity: 1;
+}
+
+#charSelect{
+    display:flex;
+    align-items: center;
+    background-image: url('https://i.pinimg.com/originals/39/02/65/39026589ee587a08e470c2ea796dc4a9.jpg');
+    background-size:cover;
+    min-height: 100vh;
+    justify-content: space-around;
+}
+#charSelect button{
+    background: transparent;
+    border: transparent;
+    cursor: pointer;
+    opacity: 0.7;
+}
+#charSelect button:hover{
+    opacity: 1;
+}
+
+.hide{
+    display: none !important;
+}
+
+#introWrapper > *{
+    padding: 10px 20px;
+    margin: 10px 20px;
+}
+  
+body #background{
     background-image: url("https://pm1.narvii.com/7841/7b228eeb57ed315347ece7414d7032bb185d6123r4-750-375_00.jpg");
     background-size: cover;
 }
@@ -41,7 +88,7 @@ cursor: pointer;
     color:white;
 }
 
-#imageLoader{
+.loader{
     height: 0;
     width: 0;
     overflow: hidden;

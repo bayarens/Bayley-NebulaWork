@@ -1,9 +1,12 @@
 ## to-do:
-make money counter go up when you get money 
-make shop not function if you dont have enough money
-give attacks special atributes 
-create start screen/ character select screen 
 create other 2 characters 
-create demon character sprite
-make game over screen 
-define close with function-b/c there is no gameover option- also add 
+create demon characters sprite - one done
+make game over screen/you win screen
+one global object calls draw on all stage objects(chosenChar + demonGuy) 
+
+money counter does not go down if an item is bought- done
+items that remove status effects don't - done
+give attacks special atributes - Done 
+make constraint on demon min - Done
+make new enemy appear after current enemy is dead - Done
+create start screen/ character select screen - donish

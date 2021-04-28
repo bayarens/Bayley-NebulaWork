@@ -12,31 +12,51 @@
     </style>
 </head>
 
-<body onload="draw()">
-    <div id="healthbars">
-        <div id="slayerDamageBar"></div>
-        <div id="slayerHealthBar"></div>
-        <div id="demonDamageBar"></div>
-        <div id="demonHealthBar"></div>
+<body>
+    <div id="startScreen">
+        <p>
+            My name is Bayley I made this game
+        </p>
+        <p>
+            It is based off a cool show I watched
+        </p>
+        <button id='startGame'>Start Game</button>
     </div>
-    <canvas id="background" width="1450" height="600"></canvas>
-    <div id="inputBox">
-        <div id="output"></div>
-        <div id="openingQuestion"></div>
-        <div id="responseButtons">
-            <button class="submit">Attack</button>
-            <button class="submit">Defend</button>
-            <button class="submit">Run</button>
-            <button class="submit">Shop</button>
-            <div id="infoDisplay"></div>
+    <div id="charSelect" class="hide">
+        <button id="Zenitsu"></button>
+        <button id="Tanjiro"><img src="img/Tanjiro.png"> </button>
+        <button id="Inosuke"></button>
+    </div>
+    <div id="gameWrapper" class="hide">
+        <div id="healthbars">
+            <div id="slayerDamageBar"></div>
+            <div id="slayerHealthBar"></div>
+            <div id="demonDamageBar"></div>
+            <div id="demonHealthBar"></div>
         </div>
-        <div id="moneyCounter">$</div>
-    </div>
-    
-    
-    <div id="imageLoader">
-        <img src="img/Tanjiro.png" alt="Tanjiro1" name="tanjiro">
-        <img src="img/Tanjiro2.png" alt="Tanjiro2" name="tanjiro2">
+        <canvas id="background" width="1450" height="600"></canvas>
+        <div id="inputBox">
+            <div id="output"></div>
+            <div id="openingQuestion"></div>
+            <div id="responseButtons">
+                <button class="submit">Attack</button>
+                <button class="submit">Defend</button>
+                <button class="submit">Run</button>
+                <button class="submit">Shop</button>
+                <div id="infoDisplay"></div>
+            </div>
+            <div id="moneyCounter">$</div>
+        </div>
+
+
+        <div id="imageLoader" class="loader">
+            <img src="img/Tanjiro.png" alt="Tanjiro1" name="tanjiro">
+            <img src="img/Tanjiro2.png" alt="Tanjiro2" name="tanjiro2">
+        </div>
+        <div id="demonImageLoader" class="loader">
+            <img src="img/demon sprite.png" alt=""/>
+            <img src="img/demon sprite2.png" alt=""/>
+        </div>
     </div>
     <script src="js/Classes.js" type="application/javascript"></script>
     <script src="js/DemonSlayer.js" type="application/javascript"></script>
