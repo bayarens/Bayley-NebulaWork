@@ -211,7 +211,7 @@ class Enemy {
             money.innerText = `$${chosenChar.money}`
         }
     }
-    x = canvas.width - 200; 
+    x = canvas.width - 200;
     y = 335
     draw() {
         this.currentImg = (this.currentImg + 1) % this.imgQueue.length
@@ -229,23 +229,28 @@ class Enemy {
         if (animation == "MiniBoss idle") {
             this.imgQueue = miniBossImageLoader
         }
-        if( animation == "MUZAN idle") {
+        if (animation == "MUZAN idle") {
             this.imgQueue = muzanImageLoader
         }
     }
 }
-
+let demonGuy;
 const demonLackey = new Enemy("Lackey", 100, 20, 40, null, 50)
 const demonMiniB = new Enemy("MiniBoss", 300, 50, 80, "poison", 125)
 const demonBoss = new Enemy("MUZAN", 500, 100, 200, "curse", 200)
+demonBoss.width *= 2
+demonBoss.height *= 2
 const demons = [demonLackey, demonMiniB, demonBoss]
 nextEnemy()
 
 function nextEnemy() {
+    if (demonGuy) {
+        winterForrest.render.splice(winterForrest.render.indexOf(demonGuy), 1)
+    }
     demonGuy = demons.shift()
     demonGuy.startAnimation(`${demonGuy.name} idle`)
     winterForrest.render.push(demonGuy)
-    
+
 }
 
 
@@ -293,7 +298,6 @@ const endFightOptions = new MenuOption("Congratulations! Will you continue on?",
 })
 
 const shopOptions = new MenuOption("Whata ya buying?", ["Potion $10", "Antidote $15", "Super Potion $25", "Ether $50"], myInput => {
-    console.log(chosenChar.money, myInput)
     if (chosenChar.money < shopCost[myInput]) {
         populateInfoBox("you don't have enough money for this")
         opener.question(startGameOptions)
@@ -334,6 +338,21 @@ const runOptions = new MenuOption("will you pick up the sword again?", ["yes", "
     if (myInput == "yes") {
         opener.question(startGameOptions)
         populateInfoBox("")
+    }
+})
+
+const gameOver = ""
+
+function restartGame(){
+    document.location = "/"
+} 
+const playerDiedOptions = new MenuOption("You feel the darkness closing in will you fight it?", ["yes", "no", "...", "..."], myInput => {
+    populateInfoBox("")
+    if (myInput == "yes") {
+        restartGame()
+    }
+    if (myInput == "no") {
+        opener.question(gameOver)
     }
 })
 
