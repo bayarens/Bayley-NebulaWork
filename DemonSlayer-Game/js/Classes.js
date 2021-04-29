@@ -150,7 +150,7 @@ class Player {
         if (animation == "Zenitsu idle") {
             this.imgQueue = imageLoaderZ
         }
-        if (animation == "Inosuke idle") {
+        if (animation == "Inousuke idle") {
             this.imgQueue = imageLoaderI
         }
     }
