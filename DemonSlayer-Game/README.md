@@ -5,6 +5,7 @@ make status effects show up
 make some attack animations if you have time
 
 
+
 make character sprites populate- done
 one global object calls draw on all stage objects(chosenChar + demonGuy)-done 
 make other 2 characters appear in game when chosen- done

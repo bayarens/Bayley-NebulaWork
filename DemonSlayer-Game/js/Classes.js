@@ -124,7 +124,7 @@ class Player {
                 demonGuy.bleed = true;
                 demonGuy.bleedRounds = 4;
             }
-            if (attack = "pierce") {
+            if (attack == "pierce") {
                 chosenChar.changeHealth(-10)
             }
             f(attack)
@@ -245,6 +245,7 @@ function nextEnemy() {
     demonGuy = demons.shift()
     demonGuy.startAnimation(`${demonGuy.name} idle`)
     winterForrest.render.push(demonGuy)
+    
 }
 
 
