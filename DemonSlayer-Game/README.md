@@ -1,7 +1,7 @@
 ## to-do:
 make status effects render
-fix bleed damage bug - DemonSlayer.js: line 
-fix poison bug- not comming off after time runs out or taken item
+fix bleed damage bug - DemonSlayer.js: line 180-183
+fix poison bug- not comming off after time runs out or taken item - I think its got to do with the shop or the "rounds"
 
 
 make game over screen/you win screen - done

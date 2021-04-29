@@ -315,7 +315,7 @@ const shopOptions = new MenuOption("Whata ya buying?", ["Potion $10", "Antidote 
         if (myInput == "antidote $15") {
             chosenChar.subtractMoney(antidote.cost)
             chosenChar.posion = false;
-            chosenChar.poisonedRounds = 0
+            chosenChar.poisonedRounds = null;
             chosenChar.curse = false;
             chosenChar.curseRounds = null;
             populateInfoBox(`${chosenChar.name} Removed Status Effect`)
@@ -329,7 +329,9 @@ const shopOptions = new MenuOption("Whata ya buying?", ["Potion $10", "Antidote 
             chosenChar.subtractMoney(ether.cost)
             chosenChar.changeHealth(-(chosenChar.maxHealth - chosenChar.health))
             chosenChar.posion = false;
+            chosenChar.poisonedRounds = null;
             chosenChar.curse = false;
+            chosenChar.curseRounds = null;
             populateInfoBox(`${chosenChar.name}  Healed all HP & removed status effect`)
         }
     }
