@@ -54,14 +54,14 @@ for (i = 0; i < allButtons.length; i++) {
 function startGame() {
     populateInfoBox((`Oh no, ${chosenChar.name} has encountered a blood starved Demon! Prepare yourself!`))
     console.log(tanjiro)
-    chosenChar.startAnimation("idle")
-    chosenChar.playAnimation()
-    demonGuy.startAnimation("idle")
-    demonGuy.playAnimation()
+    chosenChar.startAnimation(`${chosenChar.name} idle`)
     opener.question(startGameOptions)
     slayerHealthbar.innerText = chosenChar.health + "HP";
     money.innerText = `$${chosenChar.money}`
     demonHealthbar.innerText = demonGuy.health + "HP";
+    winterForrest.render.push(chosenChar)
+    winterForrest.draw()
+
 }
 
 function runOption() {
@@ -99,6 +99,14 @@ function demonSlayerAttack() {
         } else {
             let crit = false;
             if (attack == "striking tide" && (Math.round(Math.random() * 100)) < chosenChar.attacks["striking tide"].critChance) {
+                crit = true;
+                damageNum *= 8;
+            }
+            if (attack == "crazy cutting" && (Math.round(Math.random() * 100)) < chosenChar.attacks["crazy cutting"].critChance) {
+                crit = true;
+                damageNum *= 8;
+            }
+            if (attack == "heat lightning" && (Math.round(Math.random() * 100)) < chosenChar.attacks["heat lightning"].critChance) {
                 crit = true;
                 damageNum *= 8;
             }
@@ -140,14 +148,14 @@ function demonAttack() {
         }
     }
     if (demonGuy.extraAbility == "poison") {
-        if (chosenChar.poison == false && Math.random() <= .15) {
+        if (chosenChar.poison == false && Math.random() <= .10) {
             chosenChar.poison = true;
             chosenChar.poisonedRounds = 6
             populateInfoBox(`${chosenChar.name} has been poisoned for 5 turns`)
         }
     }
     if (demonGuy.extraAbility == "curse") {
-        if (chosenChar.curse == false && Math.random() <= .40) {
+        if (chosenChar.curse == false && Math.random() <= .30) {
             chosenChar.curse = true;
             chosenChar.curseRounds = 4
             populateInfoBox(`${chosenChar.name} has been cursed! If he does not kill the enemy or use an item that removes status effects, he will die in 3 turns`)

@@ -18,7 +18,7 @@ const tanjiroAttackOptions = {
 };
 const zenitsuAttackOptions = {
     outputQuestion: "Which attack will you use?",
-    buttons: ["Thunder Clap", "Rice Spirit", "Heat Lighting", "God Speed"],
+    buttons: ["Thunder Clap", "Rice Spirit", "Heat Lightning", "God Speed"],
     responseFunc: null
 };
 const inosukeAttackOptions = {
@@ -28,7 +28,7 @@ const inosukeAttackOptions = {
 };
 
 let playerAttackInfo = "";
-const zenitsuAttackInfo = "Thunder Clap: \n Damage: 40 Miss Chance: 10% Bleed: 5dmg \n\n Rice Spirit: \n Damage: 15 Miss Chance: 8% Healing: 35hp \n\n Heat Lighting: \n Damage: 10 Miss Chance: 5% Crit Chance: 75% \n\n God Speed: \n Damage: 280 Miss Chance: 75%";
+const zenitsuAttackInfo = "Thunder Clap: \n Damage: 40 Miss Chance: 10% Bleed: 5dmg \n\n Rice Spirit: \n Damage: 15 Miss Chance: 8% Healing: 35hp \n\n Heat Lightning: \n Damage: 10 Miss Chance: 5% Crit Chance: 75% \n\n God Speed: \n Damage: 280 Miss Chance: 75%";
 const inousukeAttackInfo = "Rip and Tear: \n Damage: 20 Miss Chance: 15% Bleed: 20dmg \n\n Pierce: \n Damage: 35 Miss Chance 5% Healing: 10hp \n\n Crazy Cutting: \n Damage: 15 Miss Chance 10% Crit Chance: 60% \n\n Whirling Fangs: Damage: 150 Miss Chance 50%";
 const tanjiroAttackInfo = "Water Wheel: \n Damage: 35 Miss chance: 20% Bleed: 10dmg \n\n Twisting Whirlpool: \n Damage: 20, Miss chance: 10% Healing: 20hp \n\n Striking Tide: \n Damage: 10 Miss chance: 2% Crit Chance: 35% \n\nConstant Flux: \n Damage: 200 Miss chance: 66%";
 const opener = {
@@ -53,7 +53,6 @@ class MenuOption {
     }
 }
 
-
 class Player {
     constructor(name, health) {
         this.name = name;
@@ -66,6 +65,8 @@ class Player {
         this.curse = false;
         this.poisonedRounds = 0;
         this.curseRounds = 0;
+        this.height = 212;
+        this.width = 156;
         if (name == "Tanjiro") {
             this.attacks = {
                 "water wheel": { damage: 35, missChance: 20, bleedValue: 10 },
@@ -80,7 +81,7 @@ class Player {
             this.attacks = {
                 "thunder clap": { damage: 40, missChance: 10, bleedValue: 5 },
                 "rice spirit": { damage: 15, missChance: 8, healValue: 35 },
-                "heat lighting": { damage: 10, missChance: 5, critChance: 75 },
+                "heat lightning": { damage: 10, missChance: 5, critChance: 75 },
                 "god speed": { damage: 280, missChance: 75 },
             }
             this.attackOptions = zenitsuAttackOptions;
@@ -111,7 +112,7 @@ class Player {
         zenitsuAttackOptions.responseFunc = attack => {
             if (attack == "thunder clap") {
                 demonGuy.bleed = true;
-                demonguy.bleedRounds = 4;
+                demonGuy.bleedRounds = 4;
             }
             if (attack == "rice spirit") {
                 chosenChar.changeHealth(-35)
@@ -128,29 +129,30 @@ class Player {
             }
             f(attack)
         }
-        opener.question(playerAttackOptions)
-        populateInfoBox(playerAttackInfo)
+        opener.question(this.attackOptions)
+        populateInfoBox(this.playerAttackInfo)
     }
     x = 25
     y = 335
-    draw = function () {
-        ctx.clearRect(0, 0, 800, 500)
-        ctx.drawImage(this.img, this.x, this.y)
+    draw() {
+        this.currentImg = (this.currentImg + 1) % this.imgQueue.length
+        this.img = this.imgQueue[this.currentImg]
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
     }
     imgQueue = []
     currentImg = 0
 
     startAnimation(animation) {
-        if (animation == "idle") {
+        this.currentImg = 0
+        if (animation == "Tanjiro idle") {
             this.imgQueue = imageLoader
-            this.currentImg = 0
         }
-    }
-    playAnimation() {
-        setTimeout(() => this.playAnimation(), 200)
-        this.currentImg = (this.currentImg + 1) % this.imgQueue.length
-        this.img = this.imgQueue[this.currentImg]
-        this.draw()
+        if (animation == "Zenitsu idle") {
+            this.imgQueue = imageLoaderZ
+        }
+        if (animation == "Inosuke idle") {
+            this.imgQueue = imageLoaderI
+        }
     }
     changeHealth(num) {
         this.health -= num
@@ -188,6 +190,8 @@ class Enemy {
         this.moneyDropped = moneyDropped;
         this.bleed = false;
         this.bleedRounds = 0;
+        this.height = 212;
+        this.width = 156;
     }
     dealDamage() {
         return Math.round(Math.random() * (this.damageMax - this.damageMin) + this.damageMin);
@@ -207,26 +211,27 @@ class Enemy {
             money.innerText = `$${chosenChar.money}`
         }
     }
-    x = canvas.width - 200; //1340
-    y = 280
-    draw = function () {
-        //ctx.clearRect(0, 0, 200, 500)
-        ctx.drawImage(this.img, this.x, this.y)
+    x = canvas.width - 200; 
+    y = 335
+    draw() {
+        this.currentImg = (this.currentImg + 1) % this.imgQueue.length
+        this.img = this.imgQueue[this.currentImg]
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
     }
     imgQueue = []
     currentImg = 0
 
     startAnimation(animation) {
-        if (animation == "idle") {
+        this.currentImg = 0
+        if (animation == "Lackey idle") {
             this.imgQueue = demonImageLoader
-            this.currentImg = 0
         }
-    }
-    playAnimation() {
-        setTimeout(() => this.playAnimation(), 200)
-        this.currentImg = (this.currentImg + 1) % this.imgQueue.length
-        this.img = this.imgQueue[this.currentImg]
-        this.draw()
+        if (animation == "MiniBoss idle") {
+            this.imgQueue = miniBossImageLoader
+        }
+        if( animation == "MUZAN idle") {
+            this.imgQueue = muzanImageLoader
+        }
     }
 }
 
@@ -238,6 +243,8 @@ nextEnemy()
 
 function nextEnemy() {
     demonGuy = demons.shift()
+    demonGuy.startAnimation(`${demonGuy.name} idle`)
+    winterForrest.render.push(demonGuy)
 }
 
 

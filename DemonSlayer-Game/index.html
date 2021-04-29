@@ -28,17 +28,25 @@
             Your demon slayer has died
         </p>
         <p>
-            Unfortunatly this is not uncommon 
+            Unfortunatly this is not uncommon, in this profession
         </p>
         <button id='replay'>Replay</button>
+    </div>
+    <div id="youWin" class="hide">
+        <p>
+            You have defeated the Demon King Muzan!
+        </p>
+        <p>
+            The world is safe, but you are now out of a job, I hoped you saves up...
+        </p>
     </div>
 
     <div id="charSelect" class="hide">
         <button id="Zenitsu">
-            <img src="img/TransperantZ1.png" style="height: 250px;">
+            <img src="img/TransperantZ1.png">
         </button>
-        <button id="Tanjiro"><img src="img/Tanjiro.png" style="height: 250px;"></button>
-        <button id="Inosuke"><img src="img/Inouske1.png" style="height: 250px;"></button>
+        <button id="Tanjiro"><img src="img/Tanjiro.png"></button>
+        <button id="Inosuke"><img src="img/Inouske1.png"></button>
     </div>
     <div id="gameWrapper" class="hide">
         <div id="healthbars">
@@ -72,21 +80,22 @@
             <img src="img/Inouske1.png" alt=""/>
             <img src="img/Inouske2.png" alt=""/>
         </div>
-        <div id="demonImageLoader" class="loader">
+        <div id="demonImageLoader" class="loader" class="demon">
             <img src="img/demon sprite.png" alt=""/>
             <img src="img/demon sprite2.png" alt=""/>
         </div>
-        <div id="miniBossImageLoader" class="loader">
+        <div id="miniBossImageLoader" class="loader" class="demon">
             <img src="img/Miniboss1.png" alt=""/>
             <img src="img/Miniboss2.png" alt=""/>
         </div>
-        <div id="muzanImageLoader" class="loader">
+        <div id="muzanImageLoader" class="loader" class="demon">
             <img src="img/muzan1.png" alt=""/>
             <img src="img/muzan2.png" alt=""/>
         </div>
     </div>
-    <script src="js/Classes.js" type="application/javascript"></script>
-    <script src="js/DemonSlayer.js" type="application/javascript"></script>
+    <script src="js/Stage.js"></script>
+    <script src="js/Classes.js"></script>
+    <script src="js/DemonSlayer.js"></script>
 </body>
 
 </html>
