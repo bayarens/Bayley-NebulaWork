@@ -1,11 +1,12 @@
 ## to-do:
-make the demon sprites appear after each death
-make game over screen/you win screen
-make status effects show up 
-make some attack animations if you have time
+make status effects render
+fix bleed damage bug - DemonSlayer.js: line 
+fix poison bug- not comming off after time runs out or taken item
 
 
-
+make game over screen/you win screen - done
+make bleed value show for correctly for each char - done
+make the demon sprites appear after each death- done
 make character sprites populate- done
 one global object calls draw on all stage objects(chosenChar + demonGuy)-done 
 make other 2 characters appear in game when chosen- done

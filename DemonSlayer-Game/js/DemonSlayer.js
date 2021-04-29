@@ -1,9 +1,13 @@
 const startScreen = document.querySelector("#startScreen");
 const startButton = document.querySelector("#startGame");
 const charScreen = document.querySelector("#charSelect");
+const gameOverScreen = document.querySelector("#gameOver");
 const tanjiroBut = document.querySelector("#Tanjiro");
 const zenitsuBut = document.querySelector("#Zenitsu");
 const inoskueBut = document.querySelector("#Inosuke");
+const replayButtons = document.querySelectorAll("#replay");
+const ranAwayScreen = document.querySelector("#ranAway");
+const youWinScreen = document.querySelector("#youWin");
 const gameScreen = document.querySelector("#gameWrapper");
 
 
@@ -11,6 +15,27 @@ startButton.addEventListener("click", () => {
     startScreen.classList.toggle("hide")
     charScreen.classList.toggle("hide")
 });
+
+function gameOver(){
+    gameScreen.classList.toggle("hide");
+    gameOverScreen.classList.toggle("hide");
+}
+
+function ranAway(){
+    gameScreen.classList.toggle("hide");
+    ranAwayScreen.classList.toggle("hide");
+}
+
+function youWin(){
+    gameScreen.classList.toggle("hide");
+    youWinScreen.classList.toggle("hide")
+}
+
+function restartGame(){
+    window.location.reload()
+} 
+
+replayButtons.forEach(cur => cur.addEventListener("click", restartGame))
 
 let chosenChar;
 function pickCharcter(picked) {
@@ -42,6 +67,14 @@ function populateInfoBox(text) {
     infoBox.innerText = text
 }
 
+const playerDiedOptions = new MenuOption("You feel the darkness closing in will you fight it?", ["yes", "no", "...", "..."], myInput => {
+    if (myInput == "yes") {
+        restartGame()
+    }
+    if (myInput == "no") {
+        gameOver()
+    }
+})
 
 const openingQ = document.getElementById('openingQuestion')
 const allButtons = document.querySelectorAll(".submit")
@@ -65,14 +98,12 @@ function startGame() {
 }
 
 function runOption() {
-    const run = (Math.floor(Math.random() * 100))
-    if (run >= 50) {
+    const run = (Math.random())
+    if (run > .5) {
         populateInfoBox("You got away! Death before dishonor, get back in there")
         opener.question(runOptions)
     } else if ((run) < 50) {
         populateInfoBox("You failed to get away")
-        chosenChar.startAnimation("idle")
-        chosenChar.playAnimation()
         setTimeout(demonAttack, 1500)
     }
 }
@@ -130,10 +161,15 @@ function demonSlayerAttack() {
         if (demonGuy.health <= 0) {
             demonGuy.addMoney()
             opener.question(endFightOptions);
+            if(demonGuy.name == "MUZAN"){
+                populateInfoBox("")
+                youWin()
+            }
         }
         else setTimeout(demonAttack, 1500)
     })
 }
+
 
 function demonAttack() {
     let testdamge = demonGuy.dealDamage()
@@ -141,14 +177,17 @@ function demonAttack() {
         testdamge = Math.round((testdamge * chosenChar.defense) / 100)
     }
     if (demonGuy.bleed == true) {
-        demonGuy.changeHealth(5);
-        demonGuy.bleedRounds--;
-        if (demonGuy.bleedRounds == 0) {
-            demonGuy.bleed = false;
+        chosenChar.whichAttack((attack) => {
+            let bleedDmg = chosenChar.attacks[attack].bleedValue
+            demonGuy.changeHealth(bleedDmg);
+            demonGuy.bleedRounds--;
+            if (demonGuy.bleedRounds == 0) {
+                demonGuy.bleed = false;
         }
+    })
     }
     if (demonGuy.extraAbility == "poison") {
-        if (chosenChar.poison == false && Math.random() < .10) {
+        if (chosenChar.poison == false && Math.random() < .25) {
             chosenChar.poison = true;
             chosenChar.poisonedRounds = 6
             populateInfoBox(`${chosenChar.name} has been poisoned for 5 turns`)
@@ -162,9 +201,11 @@ function demonAttack() {
         }
     }
     chosenChar.changeHealth(testdamge)
-    populateInfoBox(`${demonGuy.name}'s dark claw has landed for ${testdamge} ${chosenChar.name}'s health is now, ${chosenChar.health} ${demonGuy.bleed ? `\n${demonGuy.name} has bleed for 5dmg` : ""} ${chosenChar.poison ? ` \n${chosenChar.name} took 10dmg from the poison` : ""} ${chosenChar.curse ? `\n${chosenChar.name} is cursed, better fix that` : ""}`)
+
+    populateInfoBox(`${demonGuy.name}'s dark claw has landed for ${testdamge} ${chosenChar.name}'s health is now, ${chosenChar.health} ${demonGuy.bleed ? `\n${demonGuy.name} has bled for ${chosenChar.bleedDmgNum}` : ""} ${chosenChar.poison ? ` \n${chosenChar.name} took 10dmg from the poison` : ""} ${chosenChar.curse ? `\n${chosenChar.name} is cursed, better fix that` : ""}`)
     opener.question(startGameOptions)
     if (chosenChar.health <= 0) {
+        populateInfoBox("")
         opener.question(playerDiedOptions)
     }
 }

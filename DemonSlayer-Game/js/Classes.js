@@ -54,12 +54,13 @@ class MenuOption {
 }
 
 class Player {
-    constructor(name, health) {
+    constructor(name, health, bleedDmgNum) {
         this.name = name;
         this.health = health;
         this.maxHealth = health
         this.minHealth = 0;
         this.money = 0;
+        this.bleedDmgNum = bleedDmgNum;
         this.defending = false;
         this.poison = false;
         this.curse = false;
@@ -172,9 +173,9 @@ class Player {
     }
 }
 
-const tanjiro = new Player("Tanjiro", 500)
-const zenitsu = new Player("Zenitsu", 350)
-const inosuke = new Player("Inousuke", 650)
+const tanjiro = new Player("Tanjiro", 500, 10)
+const zenitsu = new Player("Zenitsu", 350, 5)
+const inosuke = new Player("Inousuke", 650, 20)
 
 
 
@@ -235,11 +236,13 @@ class Enemy {
     }
 }
 let demonGuy;
-const demonLackey = new Enemy("Lackey", 100, 20, 40, null, 50)
-const demonMiniB = new Enemy("MiniBoss", 300, 50, 80, "poison", 125)
-const demonBoss = new Enemy("MUZAN", 500, 100, 200, "curse", 200)
-demonBoss.width *= 2
-demonBoss.height *= 2
+const demonLackey = new Enemy("Lackey", 100, 20, 40, null, 50);
+const demonMiniB = new Enemy("MiniBoss", 300, 50, 80, "poison", 125);
+const demonBoss = new Enemy("MUZAN", 500, 100, 200, "curse", 200);
+demonBoss.width *= 2;
+demonBoss.height *= 2;
+demonBoss.x = canvas.width - 300;
+demonBoss.y = 200;
 const demons = [demonLackey, demonMiniB, demonBoss]
 nextEnemy()
 
@@ -294,7 +297,9 @@ const endFightOptions = new MenuOption("Congratulations! Will you continue on?",
         populateInfoBox(`${chosenChar.name} is now facing ${demonGuy.name}`)
         opener.question(startGameOptions)
     }
-    // else opener.close()
+    if (myInput == "no"){
+        ranAway()
+    }
 })
 
 const shopOptions = new MenuOption("Whata ya buying?", ["Potion $10", "Antidote $15", "Super Potion $25", "Ether $50"], myInput => {
@@ -310,7 +315,9 @@ const shopOptions = new MenuOption("Whata ya buying?", ["Potion $10", "Antidote 
         if (myInput == "antidote $15") {
             chosenChar.subtractMoney(antidote.cost)
             chosenChar.posion = false;
+            chosenChar.poisonedRounds = 0
             chosenChar.curse = false;
+            chosenChar.curseRounds = null;
             populateInfoBox(`${chosenChar.name} Removed Status Effect`)
         }
         if (myInput == "super potion $25") {
@@ -339,20 +346,11 @@ const runOptions = new MenuOption("will you pick up the sword again?", ["yes", "
         opener.question(startGameOptions)
         populateInfoBox("")
     }
-})
-
-const gameOver = ""
-
-function restartGame(){
-    document.location = "/"
-} 
-const playerDiedOptions = new MenuOption("You feel the darkness closing in will you fight it?", ["yes", "no", "...", "..."], myInput => {
-    populateInfoBox("")
-    if (myInput == "yes") {
-        restartGame()
-    }
-    if (myInput == "no") {
-        opener.question(gameOver)
+    if (myInput == "no"){
+        ranAway()
     }
 })
+
+
+
 

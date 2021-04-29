@@ -9,6 +9,43 @@
     min-height: 100vh;
     justify-content:space-around;
 }
+#gameOver{
+    display:flex;
+    align-items: center;
+    flex-direction:column;
+    background-image: url('https://i.ytimg.com/vi/CcX86qJ81cQ/hqdefault.jpg');
+    background-size: cover;
+    color:red;
+    font-size: 35px;
+    text-shadow: 0 0 10px black;
+    min-height: 100vh;
+    justify-content: space-around;
+}
+#ranAway{
+    display:flex;
+    align-items: center;
+    flex-direction:column;
+    background-image: url('https://i.pinimg.com/originals/b4/d3/4c/b4d34c3aaee8940615a6d79ddae65d4f.gif');
+    background-size: cover;
+    background-position: center;
+    color:white;
+    font-size: 35px;
+    text-shadow: 0 0 10px gray;
+    min-height: 100vh;
+    min-width: 10vh;
+    justify-content: space-around;
+}
+#youWin{
+    display: flex;
+    align-items: center;
+    background-image: url('https://mangathrill.com/wp-content/uploads/2019/12/dafasssss.jpg');
+    background-size: cover;
+    color:white;
+    font-size: 35px;
+    text-shadow: 0 0 10px gray;
+    min-height: 100vh;
+    justify-content: space-around;
+}
 #startGame{
     width: 80px;
     cursor: pointer;
@@ -36,10 +73,6 @@
 #charSelect img{
     height: 250px;
 }
-
-/* .demon img{
-    height: 250px;
-} */
 
 #charSelect button:hover{
     opacity: 1;
