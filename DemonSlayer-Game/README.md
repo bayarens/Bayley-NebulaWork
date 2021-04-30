@@ -1,7 +1,9 @@
 ## to-do:
-display box bugs: when status effects come off they still populate display box in hits
-display box bug: when status effect is inflicted display box does not stop populating
+bleed effect still comes up even if attack misses- worked around to make sure the bleed attacks never miss- worked around/not done
 
+
+display box bugs: when status effects come off they still populate display box in hits-done
+display box bug: when status effect is inflicted display box does not stop populating - done
 make status effects render -done
 fix bleed damage bug - DemonSlayer.js: line 180-183-done
 make snowflakes - done

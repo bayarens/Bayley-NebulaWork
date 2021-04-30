@@ -68,7 +68,7 @@ class Player {
         this.width = 156;
         if (name == "Tanjiro") {
             this.attacks = {
-                "water wheel": { damage: 35, missChance: 20, bleedValue: 10 },
+                "water wheel": { damage: 35, missChance: 0, bleedValue: 10 },
                 "twisting whirlpool": { damage: 20, missChance: 10, healValue: 20 },
                 "striking tide": { damage: 10, missChance: 2, critChance: 65 },
                 "constant flux": { damage: 200, missChance: 66 },
@@ -78,9 +78,9 @@ class Player {
         }
         if (name == "Zenitsu") {
             this.attacks = {
-                "thunder clap": { damage: 40, missChance: 10, bleedValue: 5 },
+                "thunder clap": { damage: 40, missChance: 0, bleedValue: 5 },
                 "rice spirit": { damage: 15, missChance: 8, healValue: 35 },
-                "heat lightning": { damage: 10, missChance: 5, critChance: 75 },
+                "heat lightning": { damage: 10, missChance: .05, critChance: 75 },
                 "god speed": { damage: 280, missChance: 75 },
             }
             this.attackOptions = zenitsuAttackOptions;
@@ -88,7 +88,7 @@ class Player {
         }
         if (name == "Inousuke") {
             this.attacks = {
-                "rip and tear": { damage: 20, missChance: 15, bleedValue: 20 },
+                "rip and tear": { damage: 20, missChance: 0, bleedValue: 20 },
                 "pierce": { damage: 35, missChance: 5, healValue: 10 },
                 "crazy cutting": { damage: 15, missChance: 10, critChance: 60 },
                 "whirling fangs": { damage: 150, missChance: 50 },
@@ -325,7 +325,7 @@ const shopOptions = new MenuOption("Whata ya buying?", ["Potion $10", "Antidote 
         }
         if (myInput == "antidote $15") {
             chosenChar.subtractMoney(antidote.cost)
-            chosenChar.posion = false;
+            chosenChar.poison = false;
             chosenChar.poisonedRounds = null;
             chosenChar.curse = false;
             chosenChar.curseRounds = null;
@@ -341,7 +341,7 @@ const shopOptions = new MenuOption("Whata ya buying?", ["Potion $10", "Antidote 
         if (myInput == "ether $50") {
             chosenChar.subtractMoney(ether.cost)
             chosenChar.changeHealth(-(chosenChar.maxHealth - chosenChar.health))
-            chosenChar.posion = false;
+            chosenChar.poison = false;
             chosenChar.poisonedRounds = null;
             chosenChar.curse = false;
             chosenChar.curseRounds = null;
