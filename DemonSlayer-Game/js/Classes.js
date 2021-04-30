@@ -248,8 +248,8 @@ class Enemy {
 
 let demonGuy;
 const demonLackey = new Enemy("Lackey", 100, 20, 40, null, 50);
-const demonMiniB = new Enemy("MiniBoss", 300, 50, 80, "poison", 125);
-const demonBoss = new Enemy("MUZAN", 500, 100, 200, "curse", 200);
+const demonMiniB = new Enemy("MiniBoss", 300, 40, 70, "poison", 125);
+const demonBoss = new Enemy("MUZAN", 500, 60, 150, "curse", 200);
 demonBoss.width *= 2;
 demonBoss.height *= 2;
 demonBoss.x = canvas.width - 300;
@@ -265,7 +265,6 @@ function nextEnemy() {
     demonGuy.startAnimation(`${demonGuy.name} idle`)
     winterForrest.render.push(demonGuy)
     winterForrest.removeFromRender(Bleeding)
-
 }
 
 

@@ -193,19 +193,19 @@ function demonAttack() {
     if (demonGuy.extraAbility == "poison") {
         if (chosenChar.poison == false && Math.random() < .33) {
             chosenChar.poison = true;
-            chosenChar.poisonedRounds = 4
+            chosenChar.poisonedRounds = 3
             winterForrest.render.push(Poisoned);
         }
     }
     if (demonGuy.extraAbility == "curse") {
         if (chosenChar.curse == false && Math.random() < .15) {
             chosenChar.curse = true;
-            chosenChar.curseRounds = 6
+            chosenChar.curseRounds = 5
             winterForrest.render.push(Cursed)
         }
     }
     chosenChar.changeHealth(testdamge)
-    populateInfoBox(`${demonGuy.name}'s dark claw has landed for ${testdamge} ${chosenChar.name}'s health is now, ${chosenChar.health} ${demonGuy.bleed ? `\n${demonGuy.name} has bled for ${chosenChar.bleedDmgNum}` : ""} ${chosenChar.poison ? ` \n${chosenChar.name} took 10dmg from the poison, will last for ${chosenChar.poisonedRounds-1} rounds` : ""} ${chosenChar.curse ? `\n${chosenChar.name} is cursed, better fix that, if you don't ${chosenChar.name} will die in ${chosenChar.curseRounds-1} rounds` : ""}`)
+    populateInfoBox(`${demonGuy.name}'s dark claw has landed for ${testdamge} ${chosenChar.name}'s health is now, ${chosenChar.health} ${demonGuy.bleed ? `\n${demonGuy.name} has bled for ${chosenChar.bleedDmgNum}` : ""} ${chosenChar.poison ? ` \n${chosenChar.name} took 10dmg from the poison, will last for ${chosenChar.poisonedRounds--} rounds` : ""} ${chosenChar.curse ? `\n${chosenChar.name} is cursed, better fix that, if you don't ${chosenChar.name} will die in ${chosenChar.curseRounds--} rounds` : ""}`)
     opener.question(startGameOptions)
     if (chosenChar.health <= 0) {
         populateInfoBox("")
