@@ -71,7 +71,6 @@ class Status{
     }
 }
 
-
 const Bleeding = new Status(bleedImg, false)
 const Poisoned = new Status(poisonImg)
 const Cursed = new Status(curseImg)

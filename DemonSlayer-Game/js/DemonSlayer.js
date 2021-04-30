@@ -191,7 +191,7 @@ function demonAttack() {
         }
     }
     if (demonGuy.extraAbility == "poison") {
-        if (chosenChar.poison == false && Math.random() < 1.0) {
+        if (chosenChar.poison == false && Math.random() < .33) {
             chosenChar.poison = true;
             chosenChar.poisonedRounds = 4
             winterForrest.render.push(Poisoned);
