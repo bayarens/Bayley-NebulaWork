@@ -12,9 +12,9 @@ const gameScreen = document.querySelector("#gameWrapper");
 const zenInfoBox = document.querySelector("#zInfoBox");
 const tanInfoBox = document.querySelector("#tInfoBox");
 const inInfoBox = document.querySelector("#iInfoBox");
-zenInfoBox.innerText = zenitsuAttackInfo;
-tanInfoBox.innerText = tanjiroAttackInfo;
-inInfoBox.innerText = inousukeAttackInfo;
+zenInfoBox.innerText = `${zenitsu.health}HP \n${zenitsuAttackInfo}`;
+tanInfoBox.innerText = `${tanjiro.health}HP \n${tanjiroAttackInfo}`;
+inInfoBox.innerText = `${inosuke.health}HP \n${inousukeAttackInfo}`;
 
 startButton.addEventListener("click", () => {
     startScreen.classList.toggle("hide")
