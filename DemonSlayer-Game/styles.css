@@ -4,6 +4,7 @@
     flex-direction:column;
     background-image: url('https://wallpapercave.com/wp/wp4445515.jpg');
     background-size:cover;
+    font-size: 20px;
     color:white;
     text-shadow: 0 0 10px gray;
     min-height: 100vh;

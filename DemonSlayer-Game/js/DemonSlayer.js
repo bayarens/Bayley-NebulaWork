@@ -16,24 +16,24 @@ startButton.addEventListener("click", () => {
     charScreen.classList.toggle("hide")
 });
 
-function gameOver(){
+function gameOver() {
     gameScreen.classList.toggle("hide");
     gameOverScreen.classList.toggle("hide");
 }
 
-function ranAway(){
+function ranAway() {
     gameScreen.classList.toggle("hide");
     ranAwayScreen.classList.toggle("hide");
 }
 
-function youWin(){
+function youWin() {
     gameScreen.classList.toggle("hide");
     youWinScreen.classList.toggle("hide")
 }
 
-function restartGame(){
+function restartGame() {
     window.location.reload()
-} 
+}
 
 replayButtons.forEach(cur => cur.addEventListener("click", restartGame))
 
@@ -148,20 +148,20 @@ function demonSlayerAttack() {
         if (chosenChar.posion == true) {
             chosenChar.changeHealth(10);
             chosenChar.posionedRounds--;
-            if (chosenChar.posionedRounds == 0) {
+            if (chosenChar.posionedRounds <= 0) {
                 chosenChar.posion = false;
             }
         }
         if (chosenChar.curse == true) {
             chosenChar.curseRounds--;
-            if (chosenChar.curseRounds == 0) {
+            if (chosenChar.curseRounds <= 0) {
                 chosenChar.health = 0;
             }
         }
         if (demonGuy.health <= 0) {
             demonGuy.addMoney()
             opener.question(endFightOptions);
-            if(demonGuy.name == "MUZAN"){
+            if (demonGuy.name == "MUZAN") {
                 populateInfoBox("")
                 youWin()
             }
@@ -177,14 +177,11 @@ function demonAttack() {
         testdamge = Math.round((testdamge * chosenChar.defense) / 100)
     }
     if (demonGuy.bleed == true) {
-        chosenChar.whichAttack((attack) => {
-            let bleedDmg = chosenChar.attacks[attack].bleedValue
-            demonGuy.changeHealth(bleedDmg);
-            demonGuy.bleedRounds--;
-            if (demonGuy.bleedRounds == 0) {
-                demonGuy.bleed = false;
+        demonGuy.changeHealth(demonGuy.bleedValue);
+        demonGuy.bleedRounds--;
+        if (demonGuy.bleedRounds == 0) {
+            demonGuy.bleed = false;
         }
-    })
     }
     if (demonGuy.extraAbility == "poison") {
         if (chosenChar.poison == false && Math.random() < .25) {
@@ -209,13 +206,4 @@ function demonAttack() {
         opener.question(playerDiedOptions)
     }
 }
-
-// function printMousePos(event) {
-//     const rect = canvas.getBoundingClientRect()
-//     const x = event.clientX - rect.left
-//     const y = event.clientY - rect.top
-//     console.log("x: " + x + " y: " + y)
-// }
-
-// canvas.addEventListener("click", printMousePos);
 

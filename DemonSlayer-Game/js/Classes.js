@@ -104,6 +104,7 @@ class Player {
             if (attack == "water wheel") {
                 demonGuy.bleed = true;
                 demonGuy.bleedRounds = 4;
+                demonGuy.bleedValue = chosenChar.attacks[attack].bleedValue;
             }
             if (attack == "twisting whirlpool") {
                 chosenChar.changeHealth(-20);
@@ -114,6 +115,7 @@ class Player {
             if (attack == "thunder clap") {
                 demonGuy.bleed = true;
                 demonGuy.bleedRounds = 4;
+                demonGuy.bleedValue = chosenChar.attacks[attack].bleedValue;
             }
             if (attack == "rice spirit") {
                 chosenChar.changeHealth(-35)
@@ -124,6 +126,7 @@ class Player {
             if (attack == "rip and tear") {
                 demonGuy.bleed = true;
                 demonGuy.bleedRounds = 4;
+                demonGuy.bleedValue = chosenChar.attacks[attack].bleedValue;;
             }
             if (attack == "pierce") {
                 chosenChar.changeHealth(-10)
@@ -234,7 +237,13 @@ class Enemy {
             this.imgQueue = muzanImageLoader
         }
     }
+    renderStatusEffects(){
+        if(this.bleed == true){
+            render
+        }
+    }
 }
+
 let demonGuy;
 const demonLackey = new Enemy("Lackey", 100, 20, 40, null, 50);
 const demonMiniB = new Enemy("MiniBoss", 300, 50, 80, "poison", 125);
