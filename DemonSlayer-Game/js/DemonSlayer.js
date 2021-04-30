@@ -155,6 +155,7 @@ function demonSlayerAttack() {
             chosenChar.posionedRounds--;
             if (chosenChar.posionedRounds <= 0) {
                 chosenChar.posion = false;
+                winterForrest.removeFromRender(Poisoned)
             }
         }
         if (chosenChar.curse == true) {
@@ -186,24 +187,26 @@ function demonAttack() {
         demonGuy.bleedRounds--;
         if (demonGuy.bleedRounds == 0) {
             demonGuy.bleed = false;
+            winterForrest.removeFromRender(Bleeding)
         }
     }
     if (demonGuy.extraAbility == "poison") {
-        if (chosenChar.poison == false && Math.random() < .25) {
+        if (chosenChar.poison == false && Math.random() < .35) {
             chosenChar.poison = true;
-            chosenChar.poisonedRounds = 6
-            populateInfoBox(`${chosenChar.name} has been poisoned for 5 turns`)
+            chosenChar.poisonedRounds = 4
+            winterForrest.render.push(Poisoned);
         }
+        populateInfoBox(`${chosenChar.name} has been poisoned for 5 turns`)
     }
     if (demonGuy.extraAbility == "curse") {
         if (chosenChar.curse == false && Math.random() < .15) {
             chosenChar.curse = true;
-            chosenChar.curseRounds = 4
-            populateInfoBox(`${chosenChar.name} has been cursed! If he does not kill the enemy or use an item that removes status effects, he will die in 3 turns`)
+            chosenChar.curseRounds = 6
+            winterForrest.render.push(Cursed)
         }
+        populateInfoBox(`${chosenChar.name} has been cursed! If he does not kill the enemy or use an item that removes status effects, he will die in 5 turns`)
     }
     chosenChar.changeHealth(testdamge)
-
     populateInfoBox(`${demonGuy.name}'s dark claw has landed for ${testdamge} ${chosenChar.name}'s health is now, ${chosenChar.health} ${demonGuy.bleed ? `\n${demonGuy.name} has bled for ${chosenChar.bleedDmgNum}` : ""} ${chosenChar.poison ? ` \n${chosenChar.name} took 10dmg from the poison` : ""} ${chosenChar.curse ? `\n${chosenChar.name} is cursed, better fix that` : ""}`)
     opener.question(startGameOptions)
     if (chosenChar.health <= 0) {

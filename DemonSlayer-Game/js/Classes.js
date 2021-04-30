@@ -1,5 +1,3 @@
-const canvas = document.getElementById('background');
-const ctx = canvas.getContext('2d');
 const output = document.getElementById('output');
 const imageLoader = document.querySelectorAll("#imageLoader img");
 const imageLoaderZ = document.querySelectorAll("#imageLoaderZ img")
@@ -29,7 +27,7 @@ const inosukeAttackOptions = {
 
 let playerAttackInfo = "";
 const zenitsuAttackInfo = "Thunder Clap: \n Damage: 40 \n Miss Chance: 10% \n Bleed: 5dmg \n\n Rice Spirit: \n Damage: 15 \n Miss Chance: \n 8% Healing: 35hp \n\n Heat Lightning: \n Damage: 10 \n Miss Chance: 5% \n Crit Chance: 75% \n\n God Speed: \n Damage: 280 \n Miss Chance: 75%";
-const inousukeAttackInfo = "Rip and Tear: \n Damage: 20 \n Miss Chance: 15% \n Bleed: 20dmg \n\n Pierce: \n Damage: 35 Miss Chance 5% \n Healing: 10hp \n\n Crazy Cutting: \n Damage: 15 Miss Chance 10% Crit Chance: 60% \n\n Whirling Fangs: Damage: 150 Miss Chance 50%";
+const inousukeAttackInfo = "Rip and Tear: \n Damage: 20 \n Miss Chance: 15% \n Bleed: 20dmg \n\n Pierce: \n Damage: 35 Miss Chance 5% \n Healing: 10hp \n\n Crazy Cutting: \n Damage: 15 \n Miss Chance 10% \n Crit Chance: 60% \n\n Whirling Fangs: Damage: 150 \n Miss Chance 50%";
 const tanjiroAttackInfo = "Water Wheel: \n Damage: 35 \n Miss Chance: 20% \n Bleed: 10dmg \n\n Twisting Whirlpool: \n Damage: 20 \n Miss chance: 10% \n Healing: 20hp \n\n Striking Tide: \n Damage: 10 Miss chance: 2% \n Crit Chance: 35% \n\nConstant Flux: \n Damage: 200 \n Miss chance: 66%";
 const opener = {
     question({ outputQuestion, buttons, responseFunc }) {
@@ -105,6 +103,7 @@ class Player {
                 demonGuy.bleed = true;
                 demonGuy.bleedRounds = 4;
                 demonGuy.bleedValue = chosenChar.attacks[attack].bleedValue;
+                winterForrest.render.push(Bleeding)
             }
             if (attack == "twisting whirlpool") {
                 chosenChar.changeHealth(-20);
@@ -116,6 +115,7 @@ class Player {
                 demonGuy.bleed = true;
                 demonGuy.bleedRounds = 4;
                 demonGuy.bleedValue = chosenChar.attacks[attack].bleedValue;
+                winterForrest.render.push(Bleeding)
             }
             if (attack == "rice spirit") {
                 chosenChar.changeHealth(-35)
@@ -126,7 +126,8 @@ class Player {
             if (attack == "rip and tear") {
                 demonGuy.bleed = true;
                 demonGuy.bleedRounds = 4;
-                demonGuy.bleedValue = chosenChar.attacks[attack].bleedValue;;
+                demonGuy.bleedValue = chosenChar.attacks[attack].bleedValue;
+                winterForrest.render.push(Bleeding)
             }
             if (attack == "pierce") {
                 chosenChar.changeHealth(-10)
@@ -262,6 +263,7 @@ function nextEnemy() {
     demonGuy = demons.shift()
     demonGuy.startAnimation(`${demonGuy.name} idle`)
     winterForrest.render.push(demonGuy)
+    winterForrest.removeFromRender(Bleeding)
 
 }
 
@@ -327,6 +329,8 @@ const shopOptions = new MenuOption("Whata ya buying?", ["Potion $10", "Antidote 
             chosenChar.poisonedRounds = null;
             chosenChar.curse = false;
             chosenChar.curseRounds = null;
+            winterForrest.removeFromRender(Poisoned)
+            winterForrest.removeFromRender(Cursed)
             populateInfoBox(`${chosenChar.name} Removed Status Effect`)
         }
         if (myInput == "super potion $25") {
@@ -341,6 +345,8 @@ const shopOptions = new MenuOption("Whata ya buying?", ["Potion $10", "Antidote 
             chosenChar.poisonedRounds = null;
             chosenChar.curse = false;
             chosenChar.curseRounds = null;
+            winterForrest.removeFromRender(Poisoned)
+            winterForrest.removeFromRender(Cursed)
             populateInfoBox(`${chosenChar.name}  Healed all HP & removed status effect`)
         }
     }

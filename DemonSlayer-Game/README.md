@@ -1,7 +1,8 @@
 ## to-do:
-make status effects render
-fix poison bug- not comming off after time runs out or taken item - I think its got to do with the shop or the "rounds"
+display box bugs: when status effects come off they still populate display box in hits
+display box bug: when status effect is inflicted display box does not stop populating
 
+make status effects render -done
 fix bleed damage bug - DemonSlayer.js: line 180-183-done
 make snowflakes - done
 make game over screen/you win screen - done
