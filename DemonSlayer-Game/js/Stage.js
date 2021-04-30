@@ -6,8 +6,6 @@ class Stage {
             this.render[i].draw();
         }
         setTimeout(() => this.draw(), 200)
-        if(demonGuy.bleed == true){
-        }
     }
     removeFromRender(sprite){
         if (sprite) {

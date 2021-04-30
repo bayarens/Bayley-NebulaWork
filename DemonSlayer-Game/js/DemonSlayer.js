@@ -9,7 +9,12 @@ const replayButtons = document.querySelectorAll("#replay");
 const ranAwayScreen = document.querySelector("#ranAway");
 const youWinScreen = document.querySelector("#youWin");
 const gameScreen = document.querySelector("#gameWrapper");
-
+const zenInfoBox = document.querySelector("#zInfoBox");
+const tanInfoBox = document.querySelector("#tInfoBox");
+const inInfoBox = document.querySelector("#iInfoBox");
+zenInfoBox.innerText = zenitsuAttackInfo;
+tanInfoBox.innerText = tanjiroAttackInfo;
+inInfoBox.innerText = inousukeAttackInfo;
 
 startButton.addEventListener("click", () => {
     startScreen.classList.toggle("hide")
