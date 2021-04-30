@@ -202,7 +202,6 @@ function demonAttack() {
             chosenChar.curse = true;
             chosenChar.curseRounds = 6
             winterForrest.render.push(Cursed)
-            populateInfoBox(`${chosenChar.name} has been cursed! If he does not kill the enemy or use an item that removes status effects, he will die in 5 turns`)
         }
     }
     chosenChar.changeHealth(testdamge)
