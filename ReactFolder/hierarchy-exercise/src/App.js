@@ -1,6 +1,6 @@
 import './App.css';
-import IntroPage from './Intro-Page/Intro-Page';
-import SkillsContainer from './Skill-Container/Skills-Container';
+import IntroPage from './Components/Intro-Page/Intro-Page';
+import SkillsContainer from './Components/Skill-Container/Skills-Container';
 
 
 function App() {
